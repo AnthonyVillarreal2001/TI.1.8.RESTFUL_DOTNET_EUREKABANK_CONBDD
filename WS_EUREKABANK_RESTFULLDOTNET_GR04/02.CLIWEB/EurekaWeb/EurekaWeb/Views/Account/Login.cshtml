@@ -1,0 +1,212 @@
+﻿@{
+    Layout = null;  // ← evita que el _Layout con Bootstrap altere tus estilos
+    var error = ViewBag.Error as string;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <title>EurekaBank</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+
+        body {
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 50%, #16213e 100%);
+            min-height:100vh; position:relative; overflow:hidden;
+        }
+        body::before{
+            content:''; position:absolute; inset:0;
+            background-image: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size:30px 30px; animation: movePattern 20s linear infinite;
+        }
+
+        @@keyframes movePattern {
+            0% {
+                transform: translateY(0)
+            }
+
+            100% {
+                transform: translateY(30px)
+            }
+        }
+
+
+        .fur-balls{ position:absolute; inset:0; overflow:hidden; pointer-events:none; }
+        .fur-ball{ position:absolute; border-radius:50%; opacity:.15; animation: float 15s infinite ease-in-out; }
+        .fur-ball:nth-child(2){ width:150px; height:150px; background:radial-gradient(circle at 30% 30%, #c00000, #7d0000); right:15%; top:60%; animation-delay:3s; }
+        .fur-ball:nth-child(3){ width:80px; height:80px; background:radial-gradient(circle at 30% 30%, #f4d03f, #d4ac0d); left:70%; top:15%; animation-delay:6s; }
+        .fur-ball:nth-child(1){ width:100px; height:100px; background:radial-gradient(circle at 30% 30%, #5dade2, #2471a3); left:10%; top:20%; animation-delay:0s; }
+
+        @@keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0);
+            }
+
+            50% {
+                transform: translateY(-30px) rotate(180deg);
+            }
+        }
+
+
+        .header{
+            background:linear-gradient(135deg, rgba(255,255,255,.95) 0%, rgba(255,255,255,.98) 100%);
+            backdrop-filter:blur(10px); border-bottom:5px solid #c00000;
+            padding:20px 40px; display:flex; align-items:center;
+            box-shadow:0 4px 20px rgba(0,0,0,.3); position:relative; z-index:10;
+        }
+        .header-logo{ height:70px; margin-right:15px; border-radius:12px; }
+
+        .title h1{
+            margin:0; background:linear-gradient(135deg, #c00000 0%, #0052a3 100%);
+            -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+            font-size:32px; font-weight:900; text-shadow:2px 2px 4px rgba(0,0,0,.1);
+        }
+        .title small{ color:#555; font-size:14px; display:block; margin-top:5px; letter-spacing:1px; }
+
+        .login{
+            max-width:450px; margin:80px auto; background:rgba(255,255,255,.98);
+            padding:40px; border-radius:25px; text-align:center; position:relative; z-index:5;
+            backdrop-filter:blur(10px); border:2px solid rgba(192,0,0,.2);
+            box-shadow:0 0 25px rgba(0,200,255,.3), 0 15px 40px rgba(0,0,0,.4);
+        }
+
+        .login-icon{ width:80px; height:80px; margin:0 auto 20px; }
+        .login-icon img{ width:100%; height:100%; filter:drop-shadow(0 5px 15px rgba(192,0,0,.3)); animation: iconPulse 2s infinite; }
+
+        @@keyframes iconPulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+
+        .login h2{ color:#c00000; margin-bottom:30px; font-size:24px; font-weight:700; }
+
+        .input-group{ position:relative; margin-bottom:25px; }
+        .input-icon{ position:absolute; left:15px; top:50%; transform:translateY(-50%); width:20px; height:20px; opacity:.5; }
+        .input-icon img{ width:100%; height:100%; }
+
+        input[type=text], input[type=password]{
+            width:100%; padding:15px 20px 15px 50px; border-radius:15px; border:2px solid #e0e0e0;
+            font-size:16px; transition:all .3s ease; background:rgba(255,255,255,.9);
+        }
+        input[type=text]:focus, input[type=password]:focus{
+            outline:none; border-color:#c00000; box-shadow:0 0 0 4px rgba(192,0,0,.1); transform:scale(1.02);
+        }
+
+        .btn{
+            background:linear-gradient(135deg, #c00000 0%, #900000 100%);
+            color:#fff; border:none; padding:15px 40px; border-radius:25px; cursor:pointer; font-weight:bold; font-size:16px; width:100%;
+            transition:all .3s ease; box-shadow:0 5px 15px rgba(192,0,0,.3); text-transform:uppercase; letter-spacing:1px;
+        }
+        .btn:hover{ background:linear-gradient(135deg, #900000 0%, #600000 100%); transform:translateY(-2px); box-shadow:0 8px 25px rgba(192,0,0,.5); }
+
+        .error{
+            color:#d00000; margin-top:20px; padding:15px; background:rgba(208,0,0,.1);
+            border-radius:10px; border-left:4px solid #d00000; font-weight:500; display:flex; align-items:center; gap:10px;
+        }
+        .error-icon{ width:24px; height:24px; flex-shrink:0; }
+        .error-icon img{ width:100%; height:100%; }
+
+        .footer-decoration{
+            position:absolute; bottom:0; left:0; width:100%; height:60px;
+            background:linear-gradient(to right, #c00000, #0052a3, #f4d03f, #c00000); opacity:.3; z-index:1;
+        }
+
+        .sully-pattern{
+            position:absolute; inset:0;
+            background-image: radial-gradient(circle at 20% 30%, rgba(138,43,226,.2) 100px, transparent 100px),
+                              radial-gradient(circle at 70% 60%, rgba(65,105,225,.25) 120px, transparent 120px);
+            background-repeat:no-repeat; animation: patternMove 30s linear infinite alternate; z-index:0;
+        }
+
+        @@keyframes patternMove {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(-20px, 20px);
+            }
+        }
+
+
+        @@media (max-width:768px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .logo {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+
+            .login {
+                margin: 40px auto;
+                padding: 30px 20px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="fur-balls">
+        <div class="sully-pattern"></div>
+        <div class="fur-ball"></div>
+        <div class="fur-ball"></div>
+        <div class="fur-ball"></div>
+    </div>
+
+    <div class="header">
+        <!-- coloca el archivo en wwwroot/img/logo-ldu.png -->
+        <img src="~/img/logo-ldu.png" alt="Logo" class="header-logo" />
+        <div class="title">
+            <h1>EurekaBank</h1>
+            <small>Tu banco, tu equipo.</small>
+        </div>
+    </div>
+
+    <div class="login">
+        <div class="login-icon">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23c00000' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z'/%3E%3C/svg%3E" alt="Login">
+        </div>
+        <h2>Ingreso al sistema</h2>
+
+        <form asp-action="Login" asp-controller="Account" method="post">
+            <div class="input-group">
+                <div class="input-icon">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23666' viewBox='0 0 24 24'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="User">
+                </div>
+                <input type="text" name="usuario" placeholder="Usuario" required />
+            </div>
+            <div class="input-group">
+                <div class="input-icon">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23666' viewBox='0 0 24 24'%3E%3Cpath d='M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z'/%3E%3C/svg%3E" alt="Password">
+                </div>
+                <input type="password" name="password" placeholder="Contraseña" required />
+            </div>
+            <button type="submit" class="btn">Ingresar</button>
+        </form>
+
+        @if (!string.IsNullOrEmpty(error))
+        {
+            <div class="error">
+                <div class="error-icon">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23d00000' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z'/%3E%3C/svg%3E" alt="Error">
+                </div>
+                <span>@error</span>
+            </div>
+        }
+    </div>
+
+    <div class="footer-decoration"></div>
+</body>
+</html>

@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="_02.CLIMOV.Vista.MenuPage"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto,*">
+        
+        <!-- Header Blanco SOLO con Usuario y Cerrar Sesión -->
+        <Grid Grid.Row="0" BackgroundColor="White" Padding="20,15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="2"/>
+            </Grid.RowDefinitions>
+            
+            <!-- Usuario y Cerrar Sesión centrados -->
+            <HorizontalStackLayout Grid.Row="0" Spacing="15" HorizontalOptions="Center" VerticalOptions="Center">
+                <Border HeightRequest="45"
+                        WidthRequest="45"
+                        BackgroundColor="#1E3A8A"
+                        Stroke="Transparent">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="22.5"/>
+                    </Border.StrokeShape>
+                    <Image Source="monster.jpg"
+                           Aspect="AspectFill"/>
+                </Border>
+                <Label x:Name="LblUsuario"
+                       Text="MONSTER"
+                       FontSize="16"
+                       FontAttributes="Bold"
+                       TextColor="#1F2937"
+                       VerticalOptions="Center"/>
+                <Button Text="Cerrar Sesión"
+                        Clicked="OnCerrarSesionClicked"
+                        BackgroundColor="#B91C1C"
+                        TextColor="White"
+                        CornerRadius="8"
+                        FontSize="14"
+                        Padding="20,10"/>
+            </HorizontalStackLayout>
+            
+            <!-- Línea roja debajo del header -->
+            <BoxView Grid.Row="1" Color="#B91C1C" HeightRequest="2"/>
+        </Grid>
+
+        <!-- Fondo con gradiente azul oscuro -->
+        <!-- Fondo con gradiente azul oscuro -->
+        <Grid Grid.Row="1">
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#1E3A8A" Offset="0.0" />
+                    <GradientStop Color="#1E40AF" Offset="0.3" />
+                    <GradientStop Color="#1E3A8A" Offset="0.7" />
+                    <GradientStop Color="#312E81" Offset="1.0" />
+                </LinearGradientBrush>
+            </Grid.Background>
+
+            <!-- Grid con las 4 opciones en tarjetas mejoradas -->
+            <Grid RowDefinitions="*,*"
+                  ColumnDefinitions="*,*"
+                  RowSpacing="25"
+                  ColumnSpacing="25"
+                  Padding="30"
+                  VerticalOptions="Center">
+
+                <!-- Consultar Movimientos -->
+                <Frame Grid.Row="0" Grid.Column="0"
+                       CornerRadius="15"
+                       HasShadow="True"
+                       Padding="0"
+                       BorderColor="White"
+                       BackgroundColor="White">
+                    <Grid RowDefinitions="Auto,Auto">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnConsultarMovimientosClicked"/>
+                        </Grid.GestureRecognizers>
+                        
+                        <!-- Header con gradiente -->
+                        <Grid Grid.Row="0" HeightRequest="140">
+                            <Grid.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#B91C1C" Offset="0.0" />
+                                    <GradientStop Color="#7C3AED" Offset="0.5" />
+                                    <GradientStop Color="#1E40AF" Offset="1.0" />
+                                </LinearGradientBrush>
+                            </Grid.Background>
+                            
+                            <Border HeightRequest="70"
+                                    WidthRequest="70"
+                                    BackgroundColor="White"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center"
+                                    Stroke="Transparent">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="12"/>
+                                </Border.StrokeShape>
+                                <Label Text="📊"
+                                       FontSize="45"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                            </Border>
+                        </Grid>
+                        
+                        <!-- Texto -->
+                        <Label Grid.Row="1"
+                               Text="Consultar&#x0a;Movimientos"
+                               FontSize="15"
+                               FontAttributes="Bold"
+                               HorizontalTextAlignment="Center"
+                               TextColor="#1F2937"
+                               Padding="10,15"
+                               LineBreakMode="WordWrap"/>
+                    </Grid>
+                </Frame>
+
+                <!-- Depósito -->
+                <Frame Grid.Row="0" Grid.Column="1"
+                       CornerRadius="15"
+                       HasShadow="True"
+                       Padding="0"
+                       BorderColor="White"
+                       BackgroundColor="White">
+                    <Grid RowDefinitions="Auto,Auto">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnDepositoClicked"/>
+                        </Grid.GestureRecognizers>
+                        
+                        <!-- Header con gradiente -->
+                        <Grid Grid.Row="0" HeightRequest="140">
+                            <Grid.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#B91C1C" Offset="0.0" />
+                                    <GradientStop Color="#7C3AED" Offset="0.5" />
+                                    <GradientStop Color="#1E40AF" Offset="1.0" />
+                                </LinearGradientBrush>
+                            </Grid.Background>
+                            
+                            <Border HeightRequest="70"
+                                    WidthRequest="70"
+                                    BackgroundColor="White"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center"
+                                    Stroke="Transparent">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="12"/>
+                                </Border.StrokeShape>
+                                <Label Text="💵"
+                                       FontSize="45"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                            </Border>
+                        </Grid>
+                        
+                        <!-- Texto -->
+                        <Label Grid.Row="1"
+                               Text="Depósito"
+                               FontSize="15"
+                               FontAttributes="Bold"
+                               HorizontalTextAlignment="Center"
+                               TextColor="#1F2937"
+                               Padding="10,15"/>
+                    </Grid>
+                </Frame>
+
+                <!-- Retiro -->
+                <Frame Grid.Row="1" Grid.Column="0"
+                       CornerRadius="15"
+                       HasShadow="True"
+                       Padding="0"
+                       BorderColor="White"
+                       BackgroundColor="White">
+                    <Grid RowDefinitions="Auto,Auto">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnRetiroClicked"/>
+                        </Grid.GestureRecognizers>
+                        
+                        <!-- Header con gradiente -->
+                        <Grid Grid.Row="0" HeightRequest="140">
+                            <Grid.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#B91C1C" Offset="0.0" />
+                                    <GradientStop Color="#7C3AED" Offset="0.5" />
+                                    <GradientStop Color="#1E40AF" Offset="1.0" />
+                                </LinearGradientBrush>
+                            </Grid.Background>
+                            
+                            <Border HeightRequest="70"
+                                    WidthRequest="70"
+                                    BackgroundColor="White"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center"
+                                    Stroke="Transparent">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="12"/>
+                                </Border.StrokeShape>
+                                <Label Text="💸"
+                                       FontSize="45"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                            </Border>
+                        </Grid>
+                        
+                        <!-- Texto -->
+                        <Label Grid.Row="1"
+                               Text="Retiro"
+                               FontSize="15"
+                               FontAttributes="Bold"
+                               HorizontalTextAlignment="Center"
+                               TextColor="#1F2937"
+                               Padding="10,15"/>
+                    </Grid>
+                </Frame>
+
+                <!-- Transferencia -->
+                <Frame Grid.Row="1" Grid.Column="1"
+                       CornerRadius="15"
+                       HasShadow="True"
+                       Padding="0"
+                       BorderColor="White"
+                       BackgroundColor="White">
+                    <Grid RowDefinitions="Auto,Auto">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnTransferenciaClicked"/>
+                        </Grid.GestureRecognizers>
+                        
+                        <!-- Header con gradiente -->
+                        <Grid Grid.Row="0" HeightRequest="140">
+                            <Grid.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#B91C1C" Offset="0.0" />
+                                    <GradientStop Color="#7C3AED" Offset="0.5" />
+                                    <GradientStop Color="#1E40AF" Offset="1.0" />
+                                </LinearGradientBrush>
+                            </Grid.Background>
+                            
+                            <Border HeightRequest="70"
+                                    WidthRequest="70"
+                                    BackgroundColor="White"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center"
+                                    Stroke="Transparent">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="12"/>
+                                </Border.StrokeShape>
+                                <Label Text="🔄"
+                                       FontSize="45"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                            </Border>
+                        </Grid>
+                        
+                        <!-- Texto -->
+                        <Label Grid.Row="1"
+                               Text="Transferencia"
+                               FontSize="15"
+                               FontAttributes="Bold"
+                               HorizontalTextAlignment="Center"
+                               TextColor="#1F2937"
+                               Padding="10,15"/>
+                    </Grid>
+                </Frame>
+
+            </Grid>
+        </Grid>
+
+    </Grid>
+
+</ContentPage>

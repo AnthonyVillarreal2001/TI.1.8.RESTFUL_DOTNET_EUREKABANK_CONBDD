@@ -1,0 +1,471 @@
+﻿@{
+    Layout = null; // sin _Layout para que no meta estilos de Bootstrap
+    var usuario = (string?)ViewBag.Usuario ?? "";
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <title>Menú - EurekaBank LDU</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: 'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+            background: linear-gradient(135deg,#1a1a2e 0%,#0f3460 50%,#16213e 100%);
+            min-height: 100vh
+        }
+
+            body::before {
+                content: '';
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                background-image: radial-gradient(circle,rgba(255,255,255,.05) 1px,transparent 1px);
+                background-size: 30px 30px;
+                animation: movePattern 20s linear infinite;
+                z-index: 0
+            }
+
+        @@keyframes movePattern {
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(30px);
+            }
+        }
+
+
+        .header {
+            background: linear-gradient(135deg,rgba(255,255,255,.95) 0%,rgba(255,255,255,.98) 100%);
+            backdrop-filter: blur(10px);
+            border-bottom: 5px solid #c00000;
+            padding: 20px 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center
+        }
+
+        .header h1 {
+            margin: 0;
+            background: linear-gradient(135deg,#c00000 0%,#0052a3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 28px;
+            font-weight: 900
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px
+        }
+
+        .user-info {
+            background: linear-gradient(135deg,#0052a3,#003d7a);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            box-shadow: 0 3px 10px rgba(0,82,163,.3);
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden
+        }
+
+            .user-avatar img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover
+            }
+
+        .btn-logout {
+            background: linear-gradient(135deg,#c00000 0%,#900000 100%);
+            color: #fff;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all .3s ease;
+            box-shadow: 0 3px 10px rgba(192,0,0,.3)
+        }
+
+            .btn-logout:hover {
+                background: linear-gradient(135deg,#900000 0%,#600000 100%);
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(192,0,0,.5)
+            }
+
+            .btn-logout img {
+                width: 20px;
+                height: 20px
+            }
+
+        .main {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10
+        }
+
+        .grid-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 30px;
+            align-items: flex-start
+        }
+
+        .operation-card {
+            flex: 1 1 calc(25% - 25px);
+            min-width: 260px;
+            background: rgba(255,255,255,.95);
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,.3);
+            transition: all .4s cubic-bezier(.175,.885,.32,1.275);
+            position: relative;
+            cursor: pointer;
+            border: 3px solid transparent;
+            animation: fadeInUp .6s ease forwards
+        }
+
+            .operation-card:hover {
+                transform: translateY(-10px) scale(1.02);
+                box-shadow: 0 20px 50px rgba(192,0,0,.4);
+                border-color: #c00000
+            }
+
+        @@media (max-width: 1200px) {
+            .operation-card {
+                flex: 1 1 calc(50% - 25px);
+            }
+        }
+
+        @@media (max-width: 768px) {
+            .operation-card {
+                flex: 1 1 100%;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+
+
+        .card-icon {
+            background: linear-gradient(135deg,#c00000 0%,#0052a3 100%);
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+            .card-icon::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background-image: radial-gradient(circle at 20% 30%,rgba(255,255,255,.2) 1px,transparent 1px),radial-gradient(circle at 60% 70%,rgba(255,255,255,.2) 1px,transparent 1px);
+                background-size: 8px 8px,10px 10px
+            }
+
+            .card-icon img {
+                width: 80px;
+                height: 80px;
+                filter: drop-shadow(0 5px 10px rgba(0,0,0,.3));
+                position: relative;
+                z-index: 1
+            }
+
+        .card-title {
+            padding: 20px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: #2c3e50
+        }
+
+        .card-form {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height .5s ease,padding .5s ease;
+            background: linear-gradient(to bottom,#f8f9fa,#fff);
+            padding: 0 20px
+        }
+
+        .operation-card.active .card-form {
+            max-height: 500px;
+            padding: 20px
+        }
+
+        .form-group {
+            margin-bottom: 15px
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 600;
+            font-size: 13px
+        }
+
+        input[type=text], input[type=number] {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 2px solid #e0e0e0;
+            font-size: 13px;
+            transition: all .3s ease;
+            background: #fff
+        }
+
+            input[type=text]:focus, input[type=number]:focus {
+                outline: none;
+                border-color: #c00000;
+                box-shadow: 0 0 0 3px rgba(192,0,0,.1)
+            }
+
+        .btn {
+            background: linear-gradient(135deg,#c00000 0%,#900000 100%);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 13px;
+            width: 100%;
+            transition: all .3s ease;
+            box-shadow: 0 3px 10px rgba(192,0,0,.3);
+            text-transform: uppercase;
+            letter-spacing: .5px
+        }
+
+            .btn:hover {
+                background: linear-gradient(135deg,#900000 0%,#600000 100%);
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(192,0,0,.5)
+            }
+
+        @@keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        .operation-card:nth-child(1) {
+            animation-delay: .1s;
+            opacity: 0
+        }
+
+        .operation-card:nth-child(2) {
+            animation-delay: .2s;
+            opacity: 0
+        }
+
+        .operation-card:nth-child(3) {
+            animation-delay: .3s;
+            opacity: 0
+        }
+
+        .operation-card:nth-child(4) {
+            animation-delay: .4s;
+            opacity: 0
+        }
+
+        .logo-img {
+            height: 50px;
+            margin-right: 15px;
+            border-radius: 10px;
+            object-fit: contain
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-left">
+            <img src="~/img/logo-ldu.png" class="logo-img" alt="Logo EurekaBank LDU" />
+            <h1>EurekaBank</h1>
+        </div>
+        <div class="header-right">
+            <div class="user-info">
+                <div class="user-avatar"><img src="~/img/monster.jpg" alt="Monster Avatar" /></div>
+                <span>@usuario</span>
+            </div>
+            <a asp-controller="Home" asp-action="Logout" class="btn-logout">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24'%3E%3Cpath d='M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z'/%3E%3C/svg%3E" alt="Salir" />
+                Cerrar Sesión
+            </a>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="grid-container">
+
+            <!-- Consultar Movimientos -->
+            <div class="operation-card">
+                <div class="card-icon">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24'%3E%3Cpath d='M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z'/%3E%3C/svg%3E" alt="Movimientos">
+                </div>
+                <div class="card-title">Consultar Movimientos</div>
+                <div class="card-form">
+                    
+                    <form asp-controller="Movimientos" asp-action="Index" method="get">
+                        <div class="form-group">
+                            <label>Número de cuenta:</label>
+                            <input type="text" name="cuenta" placeholder="Ingresa el número de cuenta" required />
+                        </div>
+                        <button type="submit" class="btn">Ver Movimientos</button>
+                    </form>
+
+                </div>
+            </div>
+
+            <!-- Depósito -->
+            <div class="operation-card">
+                <div class="card-icon">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24'%3E%3Cpath d='M11 17h2v-1h1c.55 0 1-.45 1-1v-3c0-.55-.45-1-1-1h-3v-1h4V8h-2V7h-2v1h-1c-.55 0-1 .45-1 1v3c0 .55.45 1 1 1h3v1H9v2h2v1zm9-13H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4V6h16v12z'/%3E%3C/svg%3E" alt="Depósito">
+                </div>
+                <div class="card-title">Depósito</div>
+                <div class="card-form">
+                    <form asp-controller="Home" asp-action="Operacion" method="post">
+                        <input type="hidden" name="action" value="deposito" />
+                        <div class="form-group">
+                            <label>Cuenta:</label>
+                            <input type="text" name="cuenta" placeholder="Número de cuenta" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Importe:</label>
+                            <input type="number" step="0.01" name="importe" placeholder="0.00" required />
+                        </div>
+                        <button type="submit" class="btn">Depositar</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Retiro -->
+            <div class="operation-card">
+                <div class="card-icon">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24'%3E%3Cpath d='M21 7.28V5c0-1.1-.9-2-2-2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-2.28c.59-.35 1-.98 1-1.72V9c0-.74-.41-1.37-1-1.72zM20 9v6h-7V9h7zM5 19V5h14v2h-6c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h6v2H5z'/%3E%3Ccircle cx='16' cy='12' r='1.5'/%3E%3C/svg%3E" alt="Retiro">
+                </div>
+                <div class="card-title">Retiro</div>
+                <div class="card-form">
+                    <form asp-controller="Home" asp-action="Operacion" method="post">
+                        <input type="hidden" name="action" value="retiro" />
+                        <div class="form-group">
+                            <label>Cuenta:</label>
+                            <input type="text" name="cuenta" placeholder="Número de cuenta" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Importe:</label>
+                            <input type="number" step="0.01" name="importe" placeholder="0.00" required />
+                        </div>
+                        <button type="submit" class="btn">Retirar</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Transferencia -->
+            <div class="operation-card">
+                <div class="card-icon">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24'%3E%3Cpath d='M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z'/%3E%3Cpath d='M6 10h2v2H6zm0 4h8v2H6z'/%3E%3C/svg%3E" alt="Transferencia">
+                </div>
+                <div class="card-title">Transferencia</div>
+                <div class="card-form">
+                    <form asp-controller="Home" asp-action="Operacion" method="post">
+                        <input type="hidden" name="action" value="transferencia" />
+                        <div class="form-group">
+                            <label>Cuenta origen:</label>
+                            <input type="text" name="cuentaOrigen" placeholder="Cuenta origen" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Cuenta destino:</label>
+                            <input type="text" name="cuentaDestino" placeholder="Cuenta destino" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Importe:</label>
+                            <input type="number" step="0.01" name="importe" placeholder="0.00" required />
+                        </div>
+                        <button type="submit" class="btn">Transferir</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.operation-card');
+            cards.forEach(card => {
+                const header = card.querySelector('.card-icon, .card-title');
+                const form = card.querySelector('.card-form');
+                header.addEventListener('click', e => {
+                    e.stopPropagation();
+                    if (card.classList.contains('active')) { card.classList.remove('active'); return; }
+                    cards.forEach(c => c.classList.remove('active'));
+                    card.classList.add('active');
+                });
+                form.addEventListener('click', e => e.stopPropagation());
+            });
+            document.body.addEventListener('click', e => {
+                if (!e.target.closest('.operation-card')) cards.forEach(c => c.classList.remove('active'));
+            });
+        });
+    </script>
+</body>
+</html>

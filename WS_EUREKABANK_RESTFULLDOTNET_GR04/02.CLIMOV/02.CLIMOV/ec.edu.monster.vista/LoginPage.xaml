@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="_02.CLIMOV.Vista.LoginPage"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto,*">
+        
+        <!-- Header Blanco con Logo y Título -->
+        <Grid Grid.Row="0" BackgroundColor="White" Padding="20,15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="2"/>
+            </Grid.RowDefinitions>
+            
+            <HorizontalStackLayout Grid.Row="0" Spacing="15" VerticalOptions="Center">
+                <Image Source="logo_ldu.png"
+                       HeightRequest="60"
+                       WidthRequest="60"
+                       Aspect="AspectFit"/>
+                <VerticalStackLayout Spacing="2" VerticalOptions="Center">
+                    <Label Text="EurekaBank"
+                           FontSize="22"
+                           FontAttributes="Bold"
+                           TextColor="#1F2937"/>
+                    <Label Text="Tu banco, tu equipo."
+                           FontSize="14"
+                           TextColor="#6B7280"/>
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+            
+            <!-- Línea roja debajo del header -->
+            <BoxView Grid.Row="1" Color="#B91C1C" HeightRequest="2"/>
+        </Grid>
+
+        <!-- Fondo con gradiente y círculos decorativos -->
+        <Grid Grid.Row="1">
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#1E3A8A" Offset="0.0" />
+                    <GradientStop Color="#1E40AF" Offset="0.3" />
+                    <GradientStop Color="#1E3A8A" Offset="0.7" />
+                    <GradientStop Color="#312E81" Offset="1.0" />
+                </LinearGradientBrush>
+            </Grid.Background>
+            
+            <!-- Círculos decorativos de fondo (más abajo para no tapar header) -->
+            <Ellipse Fill="#4C1D95" 
+                     Opacity="0.2"
+                     WidthRequest="250"
+                     HeightRequest="250"
+                     HorizontalOptions="Start"
+                     VerticalOptions="Start"
+                     Margin="-80,100,0,0"/>
+            
+            <Ellipse Fill="#1E40AF" 
+                     Opacity="0.15"
+                     WidthRequest="350"
+                     HeightRequest="350"
+                     HorizontalOptions="End"
+                     VerticalOptions="Center"
+                     Margin="0,50,-120,0"/>
+            
+            <Ellipse Fill="#7C3AED" 
+                     Opacity="0.2"
+                     WidthRequest="200"
+                     HeightRequest="200"
+                     HorizontalOptions="End"
+                     VerticalOptions="End"
+                     Margin="0,0,-60,-60"/>
+            
+            <Ellipse Fill="#3B82F6" 
+                     Opacity="0.12"
+                     WidthRequest="150"
+                     HeightRequest="150"
+                     HorizontalOptions="Start"
+                     VerticalOptions="End"
+                     Margin="-40,0,0,-40"/>
+
+            <!-- ScrollView con el contenido del login -->
+            <ScrollView VerticalOptions="Center">
+                <VerticalStackLayout Padding="30" HorizontalOptions="Center">
+                    
+                    <!-- Tarjeta de Login Blanca -->
+                    <Frame CornerRadius="20"
+                           HasShadow="True"
+                           Padding="50,40"
+                           BackgroundColor="White"
+                           HorizontalOptions="Center"
+                           WidthRequest="380"
+                           MaximumWidthRequest="450">
+
+                        <VerticalStackLayout Spacing="25">
+
+                            <!-- Icono de usuario circular con fondo blanco -->
+                            <Border HeightRequest="100"
+                                    WidthRequest="100"
+                                    BackgroundColor="White"
+                                    HorizontalOptions="Center"
+                                    Stroke="#B91C1C"
+                                    StrokeThickness="4">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="50"/>
+                                </Border.StrokeShape>
+                                <Label Text="👤"
+                                       FontSize="50"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"
+                                       TextColor="#B91C1C"/>
+                            </Border>
+
+                            <!-- Título en rojo -->
+                            <Label Text="Ingreso al sistema"
+                                   FontSize="24"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center"
+                                   TextColor="#B91C1C"
+                                   Margin="0,5,0,15"/>
+
+                            <!-- Campo Usuario con icono gris -->
+                            <Border Stroke="#D1D5DB"
+                                    StrokeThickness="1"
+                                    BackgroundColor="White"
+                                    Padding="0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="8"/>
+                                </Border.StrokeShape>
+                                <Grid ColumnDefinitions="Auto,*" Padding="15,10">
+                                    <Label Grid.Column="0"
+                                           Text="👤"
+                                           FontSize="20"
+                                           TextColor="#9CA3AF"
+                                           VerticalOptions="Center"
+                                           Margin="0,0,12,0"/>
+                                    <Entry Grid.Column="1"
+                                           x:Name="EntryUsuario"
+                                           Placeholder="Usuario"
+                                           PlaceholderColor="#9CA3AF"
+                                           TextColor="#1F2937"
+                                           FontSize="16"
+                                           VerticalOptions="Center"/>
+                                </Grid>
+                            </Border>
+
+                            <!-- Campo Contraseña con icono gris -->
+                            <Border Stroke="#D1D5DB"
+                                    StrokeThickness="1"
+                                    BackgroundColor="White"
+                                    Padding="0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="8"/>
+                                </Border.StrokeShape>
+                                <Grid ColumnDefinitions="Auto,*" Padding="15,10">
+                                    <Label Grid.Column="0"
+                                           Text="🔒"
+                                           FontSize="20"
+                                           TextColor="#9CA3AF"
+                                           VerticalOptions="Center"
+                                           Margin="0,0,12,0"/>
+                                    <Entry Grid.Column="1"
+                                           x:Name="EntryPassword"
+                                           Placeholder="Contraseña"
+                                           PlaceholderColor="#9CA3AF"
+                                           TextColor="#1F2937"
+                                           FontSize="16"
+                                           IsPassword="True"
+                                           VerticalOptions="Center"/>
+                                </Grid>
+                            </Border>
+
+                            <!-- Botón Rojo INGRESAR -->
+                            <Button x:Name="BtnLogin"
+                                    Text="INGRESAR"
+                                    Clicked="OnLoginClicked"
+                                    HeightRequest="50"
+                                    FontAttributes="Bold"
+                                    FontSize="16"
+                                    TextColor="White"
+                                    BackgroundColor="#B91C1C"
+                                    CornerRadius="8"
+                                    Margin="0,15,0,0"/>
+
+                            <!-- Loading Indicator -->
+                            <ActivityIndicator x:Name="LoadingIndicator"
+                                             IsRunning="False"
+                                             IsVisible="False"
+                                             Color="#B91C1C"
+                                             HeightRequest="40"/>
+
+                        </VerticalStackLayout>
+                    </Frame>
+                    
+                </VerticalStackLayout>
+            </ScrollView>
+            
+        </Grid>
+
+    </Grid>
+
+</ContentPage>

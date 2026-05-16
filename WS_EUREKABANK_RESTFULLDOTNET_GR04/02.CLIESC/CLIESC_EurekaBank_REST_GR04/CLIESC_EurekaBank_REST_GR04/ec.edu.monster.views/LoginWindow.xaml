@@ -1,0 +1,63 @@
+<Window x:Class="ec.edu.monster.views.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="EurekaBank | Ingreso" Width="900" Height="540"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Background="#0B3A72">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="64"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Background="White" Grid.Row="0">
+            <DockPanel LastChildFill="False" Margin="10,0">
+                <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Image Source="/ec.edu.monster.assets/img/logo-ldu.png" Height="30" Margin="4,0"/>
+                    <StackPanel Margin="8,0">
+                        <TextBlock Text="EurekaBank" Foreground="#C00000" FontWeight="Bold" FontSize="18"/>
+                        <TextBlock Text="Tu banco, tu equipo." Foreground="#777" FontSize="12"/>
+                    </StackPanel>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+        <Border Grid.Row="0" Height="3" Background="#D3252B" VerticalAlignment="Bottom"/>
+
+        <!-- Background -->
+        <Grid Grid.Row="1">
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#0B3A72" Offset="0"/>
+                    <GradientStop Color="#06244B" Offset="1"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+            <Ellipse Width="320" Height="320" Fill="#1D4D92" Opacity=".25" HorizontalAlignment="Left" Margin="60,40,0,0"/>
+            <Ellipse Width="260" Height="260" Fill="#1D4D92" Opacity=".25" HorizontalAlignment="Right" Margin="0,40,60,0"/>
+
+            <!-- Card -->
+            <Border Width="420" Padding="26" CornerRadius="16" Background="White"
+                    HorizontalAlignment="Center" VerticalAlignment="Center" >
+                <StackPanel>
+                    <Grid HorizontalAlignment="Center" Margin="0,0,0,12">
+                        <Ellipse Width="84" Height="84" Fill="#C00000"/>
+                        <Path Fill="White" Stretch="Uniform" Width="42" Height="42" Data="M24,4 C18.48,4 14,8.48 14,14 C14,19.52 18.48,24 24,24 C29.52,24 34,19.52 34,14 C34,8.48 29.52,4 24,4 Z M24,28 C17.32,28 4,31.36 4,38 L4,42 L44,42 L44,38 C44,31.36 30.68,28 24,28 Z"/>
+                    </Grid>
+
+                    <TextBlock Text="Ingreso al sistema" Foreground="#C00000"
+                               FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+
+                    <TextBox x:Name="TxtUser" Height="38" Margin="0,12,0,8" Padding="12,6"
+                             Background="#F4F6FA" BorderBrush="#5E90F0" BorderThickness="2"
+                             Style="{StaticResource WatermarkTextBox}" Tag="Usuario"/>
+                    <PasswordBox x:Name="TxtPass" Height="38" Margin="0,0,0,16" Padding="12,6"
+                                 Background="#F4F6FA" BorderBrush="#D3D8E0" BorderThickness="1"/>
+
+                    <Button x:Name="BtnLogin" Content="INGRESAR" Style="{StaticResource PrimaryButton}"
+                            Height="40" Margin="0,0,0,4"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

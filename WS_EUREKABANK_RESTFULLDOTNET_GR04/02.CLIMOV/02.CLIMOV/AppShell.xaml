@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="_02.CLIMOV.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:_02.CLIMOV"
+    xmlns:vista="clr-namespace:_02.CLIMOV.Vista"
+    Title="EurekaBank App"
+    Shell.FlyoutBehavior="Disabled">
+
+    <!-- Página de Login -->
+    <ShellContent
+        Title="Login"
+        ContentTemplate="{DataTemplate vista:LoginPage}"
+        Route="LoginPage" />
+
+    <!-- Menú Principal -->
+    <ShellContent
+        Title="Menú"
+        ContentTemplate="{DataTemplate vista:MenuPage}"
+        Route="MenuPage" />
+
+    <!-- Movimientos -->
+    <ShellContent
+        Title="Movimientos"
+        ContentTemplate="{DataTemplate vista:MovimientosPage}"
+        Route="MovimientosPage" />
+
+    <!-- Depósito -->
+    <ShellContent
+        Title="Depósito"
+        ContentTemplate="{DataTemplate vista:DepositoPage}"
+        Route="DepositoPage" />
+
+    <!-- Retiro -->
+    <ShellContent
+        Title="Retiro"
+        ContentTemplate="{DataTemplate vista:RetiroPage}"
+        Route="RetiroPage" />
+
+    <!-- Transferencia -->
+    <ShellContent
+        Title="Transferencia"
+        ContentTemplate="{DataTemplate vista:TransferenciaPage}"
+        Route="TransferenciaPage" />
+
+</Shell>

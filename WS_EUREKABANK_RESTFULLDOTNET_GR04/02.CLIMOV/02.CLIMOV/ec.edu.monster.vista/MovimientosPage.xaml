@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vista="clr-namespace:_02.CLIMOV.Vista"
+             x:Class="_02.CLIMOV.Vista.MovimientosPage"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <vista:TipoToColorConverter x:Key="TipoToColorConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,*">
+        
+        <!-- Header Blanco solo con Usuario y Cerrar Sesión -->
+        <Grid Grid.Row="0" BackgroundColor="White" Padding="20,15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="2"/>
+            </Grid.RowDefinitions>
+            
+            <!-- Usuario y Cerrar Sesión centrados -->
+            <HorizontalStackLayout Grid.Row="0" Spacing="15" HorizontalOptions="Center" VerticalOptions="Center">
+                <Border HeightRequest="45"
+                        WidthRequest="45"
+                        BackgroundColor="#1E3A8A"
+                        Stroke="Transparent">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="22.5"/>
+                    </Border.StrokeShape>
+                    <Image Source="monster.jpg"
+                           Aspect="AspectFill"/>
+                </Border>
+                <Label x:Name="LblUsuario"
+                       Text="MONSTER"
+                       FontSize="16"
+                       FontAttributes="Bold"
+                       TextColor="#1F2937"
+                       VerticalOptions="Center"/>
+                <Button Text="Cerrar Sesión"
+                        Clicked="OnCerrarSesionClicked"
+                        BackgroundColor="#B91C1C"
+                        TextColor="White"
+                        CornerRadius="8"
+                        FontSize="14"
+                        Padding="20,10"/>
+            </HorizontalStackLayout>
+            
+            <!-- Línea roja debajo del header -->
+            <BoxView Grid.Row="1" Color="#B91C1C" HeightRequest="2"/>
+        </Grid>
+
+        <!-- Fondo con gradiente azul oscuro -->
+        <Grid Grid.Row="1">
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#1E3A8A" Offset="0.0" />
+                    <GradientStop Color="#1E40AF" Offset="0.3" />
+                    <GradientStop Color="#1E3A8A" Offset="0.7" />
+                    <GradientStop Color="#312E81" Offset="1.0" />
+                </LinearGradientBrush>
+            </Grid.Background>
+
+            <ScrollView Padding="30">
+                <VerticalStackLayout Spacing="20">
+
+                    <!-- Botón Volver -->
+                    <Button Text="← Volver al Menú"
+                            Clicked="OnVolverClicked"
+                            BackgroundColor="#6B7280"
+                            TextColor="White"
+                            CornerRadius="8"
+                            FontSize="14"
+                            Padding="15,10"
+                            HorizontalOptions="Start"/>
+
+                    <!-- Tarjeta de búsqueda -->
+                    <Frame CornerRadius="20"
+                           HasShadow="True"
+                           Padding="0"
+                           BackgroundColor="White"
+                           Margin="0,0,0,20">
+                        
+                        <Grid RowDefinitions="Auto,Auto" Padding="0">
+                            <!-- Header morado -->
+                            <Grid Grid.Row="0" BackgroundColor="#8B5CF6" Padding="20">
+                                <HorizontalStackLayout Spacing="15">
+                                    <Border HeightRequest="50"
+                                            WidthRequest="50"
+                                            BackgroundColor="White">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="25"/>
+                                        </Border.StrokeShape>
+                                        <Label Text="📊"
+                                               FontSize="28"
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Center"/>
+                                    </Border>
+                                    <Label Text="Consultar&#x0a;Movimientos"
+                                           FontSize="18"
+                                           FontAttributes="Bold"
+                                           TextColor="White"
+                                           VerticalOptions="Center"
+                                           LineBreakMode="WordWrap"
+                                           MaxLines="2"/>
+                                </HorizontalStackLayout>
+                            </Grid>
+
+                            <!-- Contenido -->
+                            <VerticalStackLayout Grid.Row="1" Padding="25" Spacing="15">
+                                <Label Text="Número de cuenta:"
+                                       FontSize="14"
+                                       TextColor="#6B7280"
+                                       FontAttributes="Bold"/>
+                                <Border Stroke="#D1D5DB"
+                                        StrokeThickness="1"
+                                        BackgroundColor="White"
+                                        Padding="12,8">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="8"/>
+                                    </Border.StrokeShape>
+                                    <Entry x:Name="EntryCuenta"
+                                           Placeholder="Ingresa el número de cuenta"
+                                           PlaceholderColor="#9CA3AF"
+                                           TextColor="#1F2937"
+                                           FontSize="16"
+                                           Keyboard="Numeric"/>
+                                </Border>
+                                
+                                <Button x:Name="BtnVerMovimientos"
+                                        Text="VER MOVIMIENTOS"
+                                        Clicked="OnVerMovimientosClicked"
+                                        HeightRequest="50"
+                                        FontAttributes="Bold"
+                                        FontSize="16"
+                                        TextColor="White"
+                                        BackgroundColor="#B91C1C"
+                                        CornerRadius="10"
+                                        Margin="0,10,0,0"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Frame>
+
+                    <!-- Panel de movimientos (visible después de consultar) -->
+                    <Frame x:Name="PanelMovimientos"
+                           IsVisible="False"
+                           CornerRadius="20"
+                           HasShadow="True"
+                           Padding="0"
+                           BackgroundColor="White">
+                        
+                        <Grid RowDefinitions="Auto,*">
+                            <!-- Header -->
+                            <Grid Grid.Row="0" Padding="20" BackgroundColor="#F3F4F6">
+                                <VerticalStackLayout Spacing="5">
+                                    <Label Text="Movimientos de Cuenta"
+                                           FontSize="20"
+                                           FontAttributes="Bold"
+                                           TextColor="#1F2937"
+                                           HorizontalOptions="Center"/>
+                                    <Border BackgroundColor="#3B82F6"
+                                            Padding="15,8"
+                                            HorizontalOptions="Center">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="15"/>
+                                        </Border.StrokeShape>
+                                        <Label x:Name="LblNumeroCuenta"
+                                               Text="00100001"
+                                               FontSize="18"
+                                               FontAttributes="Bold"
+                                               TextColor="White"/>
+                                    </Border>
+                                </VerticalStackLayout>
+                            </Grid>
+
+                            <!-- Tabla de movimientos -->
+                            <ScrollView Grid.Row="1" Orientation="Both">
+                                <VerticalStackLayout Padding="15" Spacing="0">
+                                    <!-- Header de tabla con degradado rojo a azul -->
+                                    <Grid ColumnDefinitions="60,110,120,100,90"
+                                          Padding="10,15"
+                                          Margin="0,0,0,0">
+                                        <Grid.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                <GradientStop Color="#B91C1C" Offset="0.0" />
+                                                <GradientStop Color="#7C3AED" Offset="0.5" />
+                                                <GradientStop Color="#1E40AF" Offset="1.0" />
+                                            </LinearGradientBrush>
+                                        </Grid.Background>
+                                        <Label Grid.Column="0" 
+                                               Text="NRO" 
+                                               FontAttributes="Bold" 
+                                               TextColor="White" 
+                                               FontSize="13"
+                                               HorizontalTextAlignment="Center"
+                                               VerticalTextAlignment="Center"/>
+                                        <Label Grid.Column="1" 
+                                               Text="FECHA" 
+                                               FontAttributes="Bold" 
+                                               TextColor="White" 
+                                               FontSize="13"
+                                               HorizontalTextAlignment="Center"
+                                               VerticalTextAlignment="Center"/>
+                                        <Label Grid.Column="2" 
+                                               Text="TIPO" 
+                                               FontAttributes="Bold" 
+                                               TextColor="White" 
+                                               FontSize="13"
+                                               HorizontalTextAlignment="Center"
+                                               VerticalTextAlignment="Center"/>
+                                        <Label Grid.Column="3" 
+                                               Text="ACCIÓN" 
+                                               FontAttributes="Bold" 
+                                               TextColor="White" 
+                                               FontSize="13"
+                                               HorizontalTextAlignment="Center"
+                                               VerticalTextAlignment="Center"/>
+                                        <Label Grid.Column="4" 
+                                               Text="IMPORTE" 
+                                               FontAttributes="Bold" 
+                                               TextColor="White" 
+                                               FontSize="13"
+                                               HorizontalTextAlignment="Center"
+                                               VerticalTextAlignment="Center"/>
+                                    </Grid>
+
+                                    <!-- Lista de movimientos -->
+                                    <CollectionView x:Name="ListaMovimientos">
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid ColumnDefinitions="60,110,120,100,90" 
+                                                      Padding="10,15"
+                                                      BackgroundColor="White">
+                                                    <BoxView Grid.ColumnSpan="5" 
+                                                             Color="#E5E7EB" 
+                                                             HeightRequest="1" 
+                                                             VerticalOptions="End"/>
+                                                    
+                                                    <Label Grid.Column="0" 
+                                                           Text="{Binding NroMov}" 
+                                                           HorizontalTextAlignment="Center" 
+                                                           VerticalTextAlignment="Center"
+                                                           FontSize="13"
+                                                           FontAttributes="Bold"
+                                                           TextColor="#1F2937"/>
+                                                    
+                                                    <Label Grid.Column="1" 
+                                                           Text="{Binding Fecha, StringFormat='{0:yyyy-MM-dd}'}" 
+                                                           HorizontalTextAlignment="Center" 
+                                                           VerticalTextAlignment="Center"
+                                                           FontSize="12"
+                                                           TextColor="#4B5563"/>
+                                                    
+                                                    <Border Grid.Column="2" 
+                                                            BackgroundColor="{Binding Tipo, Converter={StaticResource TipoToColorConverter}}"
+                                                            Padding="10,5"
+                                                            HorizontalOptions="Center"
+                                                            VerticalOptions="Center">
+                                                        <Border.StrokeShape>
+                                                            <RoundRectangle CornerRadius="12"/>
+                                                        </Border.StrokeShape>
+                                                        <Label Text="{Binding Accion}" 
+                                                               TextColor="White" 
+                                                               FontSize="11"
+                                                               FontAttributes="Bold"
+                                                               HorizontalTextAlignment="Center"
+                                                               VerticalTextAlignment="Center"/>
+                                                    </Border>
+                                                    
+                                                    <Label Grid.Column="3" 
+                                                           Text="{Binding TipoMovimiento}" 
+                                                           HorizontalTextAlignment="Center" 
+                                                           VerticalTextAlignment="Center"
+                                                           FontSize="12"
+                                                           FontAttributes="Bold"
+                                                           TextColor="#1F2937"/>
+                                                    
+                                                    <Label Grid.Column="4" 
+                                                           Text="{Binding Importe, StringFormat='${0:F2}'}" 
+                                                           HorizontalTextAlignment="Center" 
+                                                           VerticalTextAlignment="Center"
+                                                           FontSize="13"
+                                                           FontAttributes="Bold"
+                                                           TextColor="#DC2626"/>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+                                </VerticalStackLayout>
+                            </ScrollView>
+                        </Grid>
+                    </Frame>
+
+                    <!-- Loading -->
+                    <ActivityIndicator x:Name="LoadingIndicator"
+                                      IsRunning="False"
+                                      IsVisible="False"
+                                      Color="White"
+                                      HeightRequest="50"/>
+
+                </VerticalStackLayout>
+            </ScrollView>
+        </Grid>
+
+    </Grid>
+
+</ContentPage>

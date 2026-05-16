@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="_02.CLIMOV.Vista.RetiroPage"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#1E3A8A" Offset="0.0" />
+            <GradientStop Color="#312E81" Offset="0.5" />
+            <GradientStop Color="#1E293B" Offset="1.0" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <Grid RowDefinitions="Auto,*">
+        
+        <!-- Header Blanco SOLO con Usuario y Cerrar Sesión -->
+        <Grid Grid.Row="0" BackgroundColor="White" Padding="20,15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="2"/>
+            </Grid.RowDefinitions>
+            
+            <HorizontalStackLayout Grid.Row="0" Spacing="15" HorizontalOptions="Center" VerticalOptions="Center">
+                <Border HeightRequest="45"
+                        WidthRequest="45"
+                        BackgroundColor="#1E3A8A"
+                        Stroke="Transparent">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="22.5"/>
+                    </Border.StrokeShape>
+                    <Image Source="monster.jpg"
+                           Aspect="AspectFill"/>
+                </Border>
+                <Label x:Name="LblUsuario"
+                       Text="MONSTER"
+                       FontSize="16"
+                       FontAttributes="Bold"
+                       TextColor="#1F2937"
+                       VerticalOptions="Center"/>
+                <Button Text="Cerrar Sesión"
+                        Clicked="OnCerrarSesionClicked"
+                        BackgroundColor="#B91C1C"
+                        TextColor="White"
+                        CornerRadius="8"
+                        FontSize="14"
+                        Padding="20,10"/>
+            </HorizontalStackLayout>
+            
+            <BoxView Grid.Row="1" Color="#B91C1C" HeightRequest="2"/>
+        </Grid>
+
+        <!-- Fondo con gradiente -->
+        <Grid Grid.Row="1">
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#1E3A8A" Offset="0.0" />
+                    <GradientStop Color="#312E81" Offset="0.5" />
+                    <GradientStop Color="#1E293B" Offset="1.0" />
+                </LinearGradientBrush>
+            </Grid.Background>
+
+            <ScrollView>
+                <VerticalStackLayout Padding="20" Spacing="20">
+                    
+                    <!-- Botón Volver -->
+                    <Button Text="← Volver al Menú"
+                            Clicked="OnVolverClicked"
+                            BackgroundColor="#6B7280"
+                            TextColor="White"
+                            CornerRadius="8"
+                            FontSize="14"
+                            Padding="15,10"
+                            HorizontalOptions="Start"/>
+
+                    <!-- Tarjeta de Retiro -->
+                    <Frame CornerRadius="20" HasShadow="True" Padding="0" BackgroundColor="White" VerticalOptions="Start" MaximumWidthRequest="600" HorizontalOptions="Center">
+            
+                        <Grid RowDefinitions="Auto,Auto" Padding="0">
+                            <Grid Grid.Row="0" BackgroundColor="#10B981" Padding="25">
+                                <HorizontalStackLayout Spacing="15">
+                                    <Border HeightRequest="60" WidthRequest="60" BackgroundColor="White">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="30"/>
+                                        </Border.StrokeShape>
+                                        <Label Text="💵" FontSize="35" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    </Border>
+                                    <Label Text="Retiro" FontSize="24" FontAttributes="Bold" TextColor="White" VerticalOptions="Center" LineBreakMode="WordWrap" MaxLines="2"/>
+                                </HorizontalStackLayout>
+                            </Grid>
+
+                            <VerticalStackLayout Grid.Row="1" Padding="30" Spacing="20">
+                                <Label Text="Cuenta:" FontSize="14" TextColor="#6B7280" FontAttributes="Bold"/>
+                                <Border Stroke="#D1D5DB" StrokeThickness="1" Padding="12,8">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="8"/>
+                                    </Border.StrokeShape>
+                                    <Entry x:Name="EntryCuenta" Placeholder="Número de cuenta" PlaceholderColor="#9CA3AF" TextColor="#1F2937" FontSize="16" Keyboard="Numeric"/>
+                                </Border>
+                    
+                                <Label Text="Importe:" FontSize="14" TextColor="#6B7280" FontAttributes="Bold"/>
+                                <Border Stroke="#D1D5DB" StrokeThickness="1" Padding="12,8">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="8"/>
+                                    </Border.StrokeShape>
+                                    <Entry x:Name="EntryImporte" Placeholder="0.00" PlaceholderColor="#9CA3AF" TextColor="#1F2937" FontSize="16" Keyboard="Numeric"/>
+                                </Border>
+                    
+                                <Button x:Name="BtnRetirar" Text="RETIRAR" Clicked="OnRetirarClicked" HeightRequest="50" FontAttributes="Bold" FontSize="16" TextColor="White" BackgroundColor="#10B981" CornerRadius="10" Margin="0,15,0,0"/>
+                    
+                                <ActivityIndicator x:Name="LoadingIndicator" IsRunning="False" IsVisible="False" Color="#10B981" HeightRequest="40"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Frame>
+                
+                </VerticalStackLayout>
+            </ScrollView>
+        </Grid>
+
+    </Grid>
+
+</ContentPage>

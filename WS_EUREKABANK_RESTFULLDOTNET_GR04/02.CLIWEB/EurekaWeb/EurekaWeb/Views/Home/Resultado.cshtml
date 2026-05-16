@@ -1,0 +1,362 @@
+﻿@model EurekaWeb.Models.ResultadoVm
+@{
+    Layout = null; // como en tu JSP, sin layout
+    bool esExitoso = Model.EsExitoso;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Resultado - EurekaBank LDU</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        /* === (todo tu CSS original) === */
+        /* he reemplazado los <% if %> por bloques Razor if */
+                *{ margin: 0; padding: 0; box - sizing:border - box}
+                body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:linear-gradient(135deg,#1a1a2e 0%,#0f3460 50%,#16213e 100%);min-height:100vh;position:relative;overflow:hidden}
+                body::before{content:'';position:absolute;width:100%;height:100%;background-image:radial-gradient(circle,rgba(255,255,255,0.05) 1px,transparent 1px);background-size:30px 30px;animation:movePattern 20s linear infinite}
+
+        @@keyframes movePattern {
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(30px);
+            }
+        }
+
+
+        .header {
+            background: linear-gradient(135deg,rgba(255,255,255,0.95) 0%,rgba(255,255,255,0.98) 100%);
+            backdrop-filter: blur(10px);
+            border-bottom: 5px solid #c00000;
+            padding: 20px 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center
+        }
+
+            .header h1 {
+                margin: 0;
+                background: linear-gradient(135deg,#c00000 0%,#0052a3 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                font-size: 28px;
+                font-weight: 900
+            }
+
+        .btn-back {
+            background: linear-gradient(135deg,#c00000 0%,#900000 100%);
+            color: #fff;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all .3s ease;
+            box-shadow: 0 3px 10px rgba(192,0,0,.3)
+        }
+
+            .btn-back:hover {
+                background: linear-gradient(135deg,#900000 0%,#600000 100%);
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(192,0,0,.5)
+            }
+
+            .btn-back img {
+                width: 20px;
+                height: 20px
+            }
+
+        .btn-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.1);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .3s ease
+        }
+
+            .btn-close:hover {
+                background: rgba(0,0,0,0.2);
+                transform: rotate(90deg)
+            }
+
+            .btn-close img {
+                width: 20px;
+                height: 20px
+            }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn .3s ease
+        }
+
+        @@keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+
+        .modal {
+            background: rgba(255,255,255,0.98);
+            border-radius: 30px;
+            padding: 50px;
+            max-width: 550px;
+            width: 90%;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.5);
+            position: relative;
+            text-align: center;
+            animation: modalSlideIn .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 3px solid @(esExitoso ? "rgba(46,204,113,0.3)" : "rgba(231,76,60,0.3)")
+        }
+
+        @@keyframes modalSlideIn {
+            from {
+                transform: translateY(-100px) scale(0.8);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+
+        .result-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
+            position: relative
+        }
+
+            .result-icon svg {
+                width: 100%;
+                height: 100%;
+                filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2))
+            }
+
+        .modal h2 {
+            color: @(esExitoso ? "#27ae60" : "#c0392b");
+            margin-bottom: 25px;
+            font-size: 28px;
+            font-weight: 800
+        }
+
+        .modal-message {
+            background: linear-gradient(135deg, @(esExitoso ? "rgba(46,204,113,0.1)" : "rgba(231,76,60,0.1)"), @(esExitoso ? "rgba(39,174,96,0.05)" : "rgba(192,57,43,0.05)") );
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            border-left: 5px solid @(esExitoso ? "#27ae60" : "#c0392b");
+            font-size: 16px;
+            line-height: 1.6;
+            color: #2c3e50;
+            font-weight: 500
+        }
+
+        @@media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .modal {
+                padding: 30px;
+                width: 95%;
+            }
+
+            .result-icon {
+                width: 80px;
+                height: 80px;
+            }
+        }
+
+    </style>
+
+    @* Bloques CSS condicionales (animaciones) *@
+    @if (esExitoso)
+    {
+        <style>
+            .result-icon {
+                animation: successBounce .6s cubic-bezier(0.68,-0.55,0.265,1.55)
+            }
+
+            @@keyframes successBounce {
+                0% {
+                    transform: scale(0) rotate(-180deg);
+                }
+
+                50% {
+                    transform: scale(1.1) rotate(10deg);
+                }
+
+                100% {
+                    transform: scale(1) rotate(0);
+                }
+            }
+
+
+            .confetti {
+                position: absolute;
+                width: 10px;
+                height: 10px;
+                animation: confettiFall 3s linear infinite
+            }
+
+                .confetti:nth-child(2n) {
+                    background: #c00000
+                }
+
+                .confetti:nth-child(3n) {
+                    background: #0052a3
+                }
+
+                .confetti:nth-child(4n) {
+                    background: #f4d03f
+                }
+
+                .confetti:nth-child(5n) {
+                    background: #27ae60
+                }
+
+            @@keyframes confettiFall {
+                0% {
+                    transform: translateY(-100px) rotate(0);
+                    opacity: 1;
+                }
+
+                100% {
+                    transform: translateY(1000px) rotate(720deg);
+                    opacity: 0;
+                }
+            }
+
+        </style>
+    }
+    else
+    {
+        <style>
+            .result-icon {
+                animation: errorShake .6s cubic-bezier(.36,.07,.19,.97)
+            }
+
+            @@keyframes errorShake {
+                0%, 100% {
+                    transform: translateX(0);
+                }
+
+                10%, 30%, 50%, 70%, 90% {
+                    transform: translateX(-10px);
+                }
+
+                20%, 40%, 60%, 80% {
+                    transform: translateX(10px);
+                }
+            }
+
+        </style>
+    }
+</head>
+<body>
+    <div class="header">
+        <h1>EurekaBank | Liga de Quito</h1>
+        <a asp-controller="Home" asp-action="Menu" class="btn-back">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24'%3E%3Cpath d='M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z'/%3E%3C/svg%3E" alt="Home">
+            Volver al Menú
+        </a>
+    </div>
+
+    <div class="modal-overlay">
+        <div class="modal">
+            <button class="btn-close" onclick="location.href='@Url.Action("Menu", "Home")'">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23666' viewBox='0 0 24 24'%3E%3Cpath d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'/%3E%3C/svg%3E" alt="Cerrar">
+            </button>
+
+            <div class="result-icon">
+                @if (esExitoso)
+                {
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" fill="#27ae60" />
+                        <path d="M8 12.5l2.5 2.5 5.5-5.5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                }
+                else
+                {
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" fill="#c0392b" />
+                        <path d="M8 8l8 8M16 8l-8 8" stroke="white" stroke-width="2.5" stroke-linecap="round" />
+                    </svg>
+                }
+            </div>
+
+            <h2>@(esExitoso ? "¡Operación Exitosa!" : "Error en la Operación")</h2>
+
+            <div class="modal-message">
+                @Model.Mensaje
+            </div>
+
+            @if (esExitoso && Model.Saldo.HasValue && !string.IsNullOrEmpty(Model.Cuenta))
+            {
+                <div style="margin-top:20px;padding:18px 20px;border-radius:18px;background:linear-gradient(135deg, rgba(39,174,96,0.1), rgba(46,204,113,0.05));border-left:5px solid #27ae60;font-size:15px;color:#1e3c2f;text-align:left;">
+                    <strong>Nuevo saldo disponible</strong><br />
+                    Cuenta <strong>@Model.Cuenta</strong>:
+                    <span style="font-size:17px;">$ @Model.Saldo.Value.ToString("N2")</span>
+                </div>
+            }
+        </div>
+    </div>
+
+    @if (esExitoso)
+    {
+        <script>
+            function createConfetti() {
+                for (let i = 0; i < 30; i++) {
+                    let confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.animationDelay = Math.random() * 3 + 's';
+                    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    document.body.appendChild(confetti);
+                }
+            }
+            window.onload = createConfetti;
+        </script>
+    }
+</body>
+</html>

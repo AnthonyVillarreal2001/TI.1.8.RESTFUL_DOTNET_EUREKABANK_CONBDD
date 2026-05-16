@@ -1,0 +1,96 @@
+# .gitignore generado: ignora carpetas bin/ y obj/ y archivos innecesarios para .NET/IDE
+# Ignorar carpetas de build
+/bin/
+/obj/
+**/bin/
+**/obj/
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Rider / IntelliJ
+.idea/
+
+# VS Code
+.vscode/
+
+# Build artefacts
+/artifacts/
+*.dll
+*.exe
+*.pdb
+*.cache
+*.ilk
+*.idb
+*.lib
+
+# NuGet
+packages/
+*.nupkg
+project.lock.json
+project.fragment.lock.json
+
+# Publish
+/publish/
+**/publish/
+
+# ASP.NET
+App_Data/
+wwwroot/node_modules/
+
+# User-specific files
+*.log
+*.vspscc
+*.vssscc
+*.dbmdl
+.DS_Store
+Thumbs.db
+
+# Environment / secrets
+.env
+secrets.json
+appsettings.Development.json
+
+# Node / front-end
+node_modules/
+dist/
+build/
+
+# Others
+TestResults/
+coverage/
+*.coverage
+# Build Folders
+/bin/
+/obj/
+/artifacts/
+
+# Visual Studio
+/.vs/
+*.user
+*.suo
+*.userosscache
+*.vcxproj.user
+
+# NuGet
+/packages/
+*.nupkg
+
+# Publish
+/publish/
+
+# Test Results
+/TestResults/
+
+# Rider/IDEA
+/.idea/
+
+# OS
+.DS_Store
+
+# IDEs
+/.vscode/
