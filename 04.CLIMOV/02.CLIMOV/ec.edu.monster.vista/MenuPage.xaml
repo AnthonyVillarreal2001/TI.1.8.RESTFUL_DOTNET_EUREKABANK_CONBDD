@@ -2,266 +2,399 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="_02.CLIMOV.Vista.MenuPage"
-             Shell.NavBarIsVisible="False">
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#000000">
 
-    <Grid RowDefinitions="Auto,*">
-        
-        <!-- Header Blanco SOLO con Usuario y Cerrar Sesión -->
-        <Grid Grid.Row="0" BackgroundColor="White" Padding="20,15">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="2"/>
-            </Grid.RowDefinitions>
-            
-            <!-- Usuario y Cerrar Sesión centrados -->
-            <HorizontalStackLayout Grid.Row="0" Spacing="15" HorizontalOptions="Center" VerticalOptions="Center">
-                <Border HeightRequest="45"
-                        WidthRequest="45"
-                        BackgroundColor="#1E3A8A"
-                        Stroke="Transparent">
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="22.5"/>
-                    </Border.StrokeShape>
+    <Grid RowDefinitions="Auto,*,Auto" BackgroundColor="#000000">
+
+        <!-- Header con Logo, Título, Usuario y Cerrar Sesión -->
+        <Grid Grid.Row="0" BackgroundColor="#D90a3d62" Padding="20,15">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <HorizontalStackLayout Grid.Column="0" Spacing="15" VerticalOptions="Center">
+                <Image Source="logo_ldu.png"
+                       HeightRequest="45"
+                       WidthRequest="45"
+                       Aspect="AspectFit"/>
+                <Label Text="EurekaBank"
+                       FontSize="22"
+                       FontAttributes="Bold"
+                       TextColor="White"/>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Grid.Column="1" Spacing="15" HorizontalOptions="End" VerticalOptions="Center">
+                <Frame CornerRadius="20"
+                       HasShadow="False"
+                       Padding="0"
+                       BackgroundColor="#0c2d48"
+                       BorderColor="Transparent"
+                       HeightRequest="40"
+                       WidthRequest="40">
                     <Image Source="monster.jpg"
                            Aspect="AspectFill"/>
-                </Border>
+                </Frame>
                 <Label x:Name="LblUsuario"
                        Text="MONSTER"
-                       FontSize="16"
+                       FontSize="14"
                        FontAttributes="Bold"
-                       TextColor="#1F2937"
+                       TextColor="White"
                        VerticalOptions="Center"/>
                 <Button Text="Cerrar Sesión"
                         Clicked="OnCerrarSesionClicked"
-                        BackgroundColor="#B91C1C"
+                        BackgroundColor="#e67e22"
                         TextColor="White"
-                        CornerRadius="8"
-                        FontSize="14"
-                        Padding="20,10"/>
+                        CornerRadius="20"
+                        FontSize="12"
+                        FontAttributes="Bold"
+                        Padding="15,8"/>
             </HorizontalStackLayout>
-            
-            <!-- Línea roja debajo del header -->
-            <BoxView Grid.Row="1" Color="#B91C1C" HeightRequest="2"/>
         </Grid>
 
-        <!-- Fondo con gradiente azul oscuro -->
-        <!-- Fondo con gradiente azul oscuro -->
+        <!-- Fondo con imagen y overlay -->
         <Grid Grid.Row="1">
-            <Grid.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                    <GradientStop Color="#1E3A8A" Offset="0.0" />
-                    <GradientStop Color="#1E40AF" Offset="0.3" />
-                    <GradientStop Color="#1E3A8A" Offset="0.7" />
-                    <GradientStop Color="#312E81" Offset="1.0" />
-                </LinearGradientBrush>
-            </Grid.Background>
+            <Image Source="sullivan.jpg"
+                   Aspect="AspectFill"
+                   Opacity="0.3"/>
 
-            <!-- Grid con las 4 opciones en tarjetas mejoradas -->
-            <Grid RowDefinitions="*,*"
-                  ColumnDefinitions="*,*"
-                  RowSpacing="25"
-                  ColumnSpacing="25"
-                  Padding="30"
-                  VerticalOptions="Center">
+            <BoxView Color="#000000" Opacity="0.65"/>
 
-                <!-- Consultar Movimientos -->
-                <Frame Grid.Row="0" Grid.Column="0"
-                       CornerRadius="15"
-                       HasShadow="True"
-                       Padding="0"
-                       BorderColor="White"
-                       BackgroundColor="White">
-                    <Grid RowDefinitions="Auto,Auto">
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnConsultarMovimientosClicked"/>
-                        </Grid.GestureRecognizers>
-                        
-                        <!-- Header con gradiente -->
-                        <Grid Grid.Row="0" HeightRequest="140">
-                            <Grid.Background>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                    <GradientStop Color="#B91C1C" Offset="0.0" />
-                                    <GradientStop Color="#7C3AED" Offset="0.5" />
-                                    <GradientStop Color="#1E40AF" Offset="1.0" />
-                                </LinearGradientBrush>
-                            </Grid.Background>
-                            
-                            <Border HeightRequest="70"
-                                    WidthRequest="70"
-                                    BackgroundColor="White"
-                                    HorizontalOptions="Center"
-                                    VerticalOptions="Center"
-                                    Stroke="Transparent">
-                                <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="12"/>
-                                </Border.StrokeShape>
-                                <Label Text="📊"
-                                       FontSize="45"
+            <!-- ScrollView para cards responsivas -->
+            <ScrollView VerticalScrollBarVisibility="Never">
+                <StackLayout Padding="20" Spacing="20">
+
+                    <!-- Consultar Movimientos -->
+                    <Frame CornerRadius="15"
+                           HasShadow="True"
+                           Padding="0"
+                           BackgroundColor="White"
+                           BorderColor="Transparent">
+                        <Grid RowDefinitions="120,*" RowSpacing="0">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnConsultarMovimientosClicked"/>
+                            </Grid.GestureRecognizers>
+
+                            <!-- Header con degradado -->
+                            <Grid Grid.Row="0">
+                                <Grid.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <GradientStop Color="#0a3d62" Offset="0.0"/>
+                                        <GradientStop Color="#0c2d48" Offset="1.0"/>
+                                    </LinearGradientBrush>
+                                </Grid.Background>
+
+                                <Frame CornerRadius="10"
+                                       HasShadow="False"
+                                       Padding="0"
+                                       BackgroundColor="White"
+                                       BorderColor="Transparent"
                                        HorizontalOptions="Center"
-                                       VerticalOptions="Center"/>
-                            </Border>
-                        </Grid>
-                        
-                        <!-- Texto -->
-                        <Label Grid.Row="1"
-                               Text="Consultar&#x0a;Movimientos"
-                               FontSize="15"
-                               FontAttributes="Bold"
-                               HorizontalTextAlignment="Center"
-                               TextColor="#1F2937"
-                               Padding="10,15"
-                               LineBreakMode="WordWrap"/>
-                    </Grid>
-                </Frame>
+                                       VerticalOptions="Center"
+                                       WidthRequest="60"
+                                       HeightRequest="60">
+                                    <Label Text="📊"
+                                           FontSize="35"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"/>
+                                </Frame>
+                            </Grid>
 
-                <!-- Depósito -->
-                <Frame Grid.Row="0" Grid.Column="1"
-                       CornerRadius="15"
-                       HasShadow="True"
-                       Padding="0"
-                       BorderColor="White"
-                       BackgroundColor="White">
-                    <Grid RowDefinitions="Auto,Auto">
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnDepositoClicked"/>
-                        </Grid.GestureRecognizers>
-                        
-                        <!-- Header con gradiente -->
-                        <Grid Grid.Row="0" HeightRequest="140">
-                            <Grid.Background>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                    <GradientStop Color="#B91C1C" Offset="0.0" />
-                                    <GradientStop Color="#7C3AED" Offset="0.5" />
-                                    <GradientStop Color="#1E40AF" Offset="1.0" />
-                                </LinearGradientBrush>
-                            </Grid.Background>
-                            
-                            <Border HeightRequest="70"
-                                    WidthRequest="70"
-                                    BackgroundColor="White"
-                                    HorizontalOptions="Center"
-                                    VerticalOptions="Center"
-                                    Stroke="Transparent">
-                                <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="12"/>
-                                </Border.StrokeShape>
-                                <Label Text="💵"
-                                       FontSize="45"
+                            <!-- Título y Contenido -->
+                            <StackLayout Grid.Row="1" Padding="15" Spacing="10">
+                                <Label Text="Consultar&#x0a;Movimientos"
+                                       FontSize="14"
+                                       FontAttributes="Bold"
+                                       HorizontalTextAlignment="Center"
+                                       TextColor="#0a3d62"
+                                       LineBreakMode="WordWrap"/>
+
+                                <!-- Formulario colapsable -->
+                                <StackLayout x:Name="FormMovimientos"
+                                            IsVisible="False"
+                                            Spacing="10">
+                                    <Label Text="Número de cuenta"
+                                           FontSize="12"
+                                           FontAttributes="Bold"
+                                           TextColor="#0a3d62"/>
+                                    <Entry x:Name="CuentaMovimientos"
+                                           Placeholder="Ingrese cuenta"
+                                           PlaceholderColor="#CCCCCC"
+                                           TextColor="#000000"
+                                           BackgroundColor="#F5F5F5"/>
+                                    <Button Text="Ver movimientos"
+                                            BackgroundColor="#e67e22"
+                                            TextColor="White"
+                                            FontAttributes="Bold"
+                                            CornerRadius="20"
+                                            Clicked="OnConsultarMovimientosSubmit"/>
+                                </StackLayout>
+                            </StackLayout>
+                        </Grid>
+                    </Frame>
+
+                    <!-- Depósito -->
+                    <Frame CornerRadius="15"
+                           HasShadow="True"
+                           Padding="0"
+                           BackgroundColor="White"
+                           BorderColor="Transparent">
+                        <Grid RowDefinitions="120,*" RowSpacing="0">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnDepositoClicked"/>
+                            </Grid.GestureRecognizers>
+
+                            <!-- Header con degradado -->
+                            <Grid Grid.Row="0">
+                                <Grid.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <GradientStop Color="#0a3d62" Offset="0.0"/>
+                                        <GradientStop Color="#0c2d48" Offset="1.0"/>
+                                    </LinearGradientBrush>
+                                </Grid.Background>
+
+                                <Frame CornerRadius="10"
+                                       HasShadow="False"
+                                       Padding="0"
+                                       BackgroundColor="White"
+                                       BorderColor="Transparent"
                                        HorizontalOptions="Center"
-                                       VerticalOptions="Center"/>
-                            </Border>
-                        </Grid>
-                        
-                        <!-- Texto -->
-                        <Label Grid.Row="1"
-                               Text="Depósito"
-                               FontSize="15"
-                               FontAttributes="Bold"
-                               HorizontalTextAlignment="Center"
-                               TextColor="#1F2937"
-                               Padding="10,15"/>
-                    </Grid>
-                </Frame>
+                                       VerticalOptions="Center"
+                                       WidthRequest="60"
+                                       HeightRequest="60">
+                                    <Label Text="💵"
+                                           FontSize="35"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"/>
+                                </Frame>
+                            </Grid>
 
-                <!-- Retiro -->
-                <Frame Grid.Row="1" Grid.Column="0"
-                       CornerRadius="15"
-                       HasShadow="True"
-                       Padding="0"
-                       BorderColor="White"
-                       BackgroundColor="White">
-                    <Grid RowDefinitions="Auto,Auto">
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnRetiroClicked"/>
-                        </Grid.GestureRecognizers>
-                        
-                        <!-- Header con gradiente -->
-                        <Grid Grid.Row="0" HeightRequest="140">
-                            <Grid.Background>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                    <GradientStop Color="#B91C1C" Offset="0.0" />
-                                    <GradientStop Color="#7C3AED" Offset="0.5" />
-                                    <GradientStop Color="#1E40AF" Offset="1.0" />
-                                </LinearGradientBrush>
-                            </Grid.Background>
-                            
-                            <Border HeightRequest="70"
-                                    WidthRequest="70"
-                                    BackgroundColor="White"
-                                    HorizontalOptions="Center"
-                                    VerticalOptions="Center"
-                                    Stroke="Transparent">
-                                <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="12"/>
-                                </Border.StrokeShape>
-                                <Label Text="💸"
-                                       FontSize="45"
+                            <!-- Título y Contenido -->
+                            <StackLayout Grid.Row="1" Padding="15" Spacing="10">
+                                <Label Text="Depósito"
+                                       FontSize="14"
+                                       FontAttributes="Bold"
+                                       HorizontalTextAlignment="Center"
+                                       TextColor="#0a3d62"/>
+
+                                <!-- Formulario colapsable -->
+                                <StackLayout x:Name="FormDeposito"
+                                            IsVisible="False"
+                                            Spacing="10">
+                                    <Label Text="Cuenta destino"
+                                           FontSize="12"
+                                           FontAttributes="Bold"
+                                           TextColor="#0a3d62"/>
+                                    <Entry x:Name="CuentaDeposito"
+                                           Placeholder="Ingrese cuenta"
+                                           PlaceholderColor="#CCCCCC"
+                                           TextColor="#000000"
+                                           BackgroundColor="#F5F5F5"/>
+                                    <Label Text="Importe (USD)"
+                                           FontSize="12"
+                                           FontAttributes="Bold"
+                                           TextColor="#0a3d62"
+                                           Margin="0,5,0,0"/>
+                                    <Entry x:Name="ImporteDeposito"
+                                           Placeholder="0.00"
+                                           PlaceholderColor="#CCCCCC"
+                                           TextColor="#000000"
+                                           BackgroundColor="#F5F5F5"
+                                           Keyboard="Numeric"/>
+                                    <Button Text="Depositar"
+                                            BackgroundColor="#e67e22"
+                                            TextColor="White"
+                                            FontAttributes="Bold"
+                                            CornerRadius="20"
+                                            Margin="0,5,0,0"
+                                            Clicked="OnDepositoSubmit"/>
+                                </StackLayout>
+                            </StackLayout>
+                        </Grid>
+                    </Frame>
+
+                    <!-- Retiro -->
+                    <Frame CornerRadius="15"
+                           HasShadow="True"
+                           Padding="0"
+                           BackgroundColor="White"
+                           BorderColor="Transparent">
+                        <Grid RowDefinitions="120,*" RowSpacing="0">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnRetiroClicked"/>
+                            </Grid.GestureRecognizers>
+
+                            <!-- Header con degradado -->
+                            <Grid Grid.Row="0">
+                                <Grid.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <GradientStop Color="#0a3d62" Offset="0.0"/>
+                                        <GradientStop Color="#0c2d48" Offset="1.0"/>
+                                    </LinearGradientBrush>
+                                </Grid.Background>
+
+                                <Frame CornerRadius="10"
+                                       HasShadow="False"
+                                       Padding="0"
+                                       BackgroundColor="White"
+                                       BorderColor="Transparent"
                                        HorizontalOptions="Center"
-                                       VerticalOptions="Center"/>
-                            </Border>
-                        </Grid>
-                        
-                        <!-- Texto -->
-                        <Label Grid.Row="1"
-                               Text="Retiro"
-                               FontSize="15"
-                               FontAttributes="Bold"
-                               HorizontalTextAlignment="Center"
-                               TextColor="#1F2937"
-                               Padding="10,15"/>
-                    </Grid>
-                </Frame>
+                                       VerticalOptions="Center"
+                                       WidthRequest="60"
+                                       HeightRequest="60">
+                                    <Label Text="💸"
+                                           FontSize="35"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"/>
+                                </Frame>
+                            </Grid>
 
-                <!-- Transferencia -->
-                <Frame Grid.Row="1" Grid.Column="1"
-                       CornerRadius="15"
-                       HasShadow="True"
-                       Padding="0"
-                       BorderColor="White"
-                       BackgroundColor="White">
-                    <Grid RowDefinitions="Auto,Auto">
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnTransferenciaClicked"/>
-                        </Grid.GestureRecognizers>
-                        
-                        <!-- Header con gradiente -->
-                        <Grid Grid.Row="0" HeightRequest="140">
-                            <Grid.Background>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                    <GradientStop Color="#B91C1C" Offset="0.0" />
-                                    <GradientStop Color="#7C3AED" Offset="0.5" />
-                                    <GradientStop Color="#1E40AF" Offset="1.0" />
-                                </LinearGradientBrush>
-                            </Grid.Background>
-                            
-                            <Border HeightRequest="70"
-                                    WidthRequest="70"
-                                    BackgroundColor="White"
-                                    HorizontalOptions="Center"
-                                    VerticalOptions="Center"
-                                    Stroke="Transparent">
-                                <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="12"/>
-                                </Border.StrokeShape>
-                                <Label Text="🔄"
-                                       FontSize="45"
+                            <!-- Título y Contenido -->
+                            <StackLayout Grid.Row="1" Padding="15" Spacing="10">
+                                <Label Text="Retiro"
+                                       FontSize="14"
+                                       FontAttributes="Bold"
+                                       HorizontalTextAlignment="Center"
+                                       TextColor="#0a3d62"/>
+
+                                <!-- Formulario colapsable -->
+                                <StackLayout x:Name="FormRetiro"
+                                            IsVisible="False"
+                                            Spacing="10">
+                                    <Label Text="Cuenta origen"
+                                           FontSize="12"
+                                           FontAttributes="Bold"
+                                           TextColor="#0a3d62"/>
+                                    <Entry x:Name="CuentaRetiro"
+                                           Placeholder="Ingrese cuenta"
+                                           PlaceholderColor="#CCCCCC"
+                                           TextColor="#000000"
+                                           BackgroundColor="#F5F5F5"/>
+                                    <Label Text="Importe (USD)"
+                                           FontSize="12"
+                                           FontAttributes="Bold"
+                                           TextColor="#0a3d62"
+                                           Margin="0,5,0,0"/>
+                                    <Entry x:Name="ImporteRetiro"
+                                           Placeholder="0.00"
+                                           PlaceholderColor="#CCCCCC"
+                                           TextColor="#000000"
+                                           BackgroundColor="#F5F5F5"
+                                           Keyboard="Numeric"/>
+                                    <Button Text="Retirar"
+                                            BackgroundColor="#e67e22"
+                                            TextColor="White"
+                                            FontAttributes="Bold"
+                                            CornerRadius="20"
+                                            Margin="0,5,0,0"
+                                            Clicked="OnRetiroSubmit"/>
+                                </StackLayout>
+                            </StackLayout>
+                        </Grid>
+                    </Frame>
+
+                    <!-- Transferencia -->
+                    <Frame CornerRadius="15"
+                           HasShadow="True"
+                           Padding="0"
+                           BackgroundColor="White"
+                           BorderColor="Transparent">
+                        <Grid RowDefinitions="120,*" RowSpacing="0">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnTransferenciaClicked"/>
+                            </Grid.GestureRecognizers>
+
+                            <!-- Header con degradado -->
+                            <Grid Grid.Row="0">
+                                <Grid.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <GradientStop Color="#0a3d62" Offset="0.0"/>
+                                        <GradientStop Color="#0c2d48" Offset="1.0"/>
+                                    </LinearGradientBrush>
+                                </Grid.Background>
+
+                                <Frame CornerRadius="10"
+                                       HasShadow="False"
+                                       Padding="0"
+                                       BackgroundColor="White"
+                                       BorderColor="Transparent"
                                        HorizontalOptions="Center"
-                                       VerticalOptions="Center"/>
-                            </Border>
-                        </Grid>
-                        
-                        <!-- Texto -->
-                        <Label Grid.Row="1"
-                               Text="Transferencia"
-                               FontSize="15"
-                               FontAttributes="Bold"
-                               HorizontalTextAlignment="Center"
-                               TextColor="#1F2937"
-                               Padding="10,15"/>
-                    </Grid>
-                </Frame>
+                                       VerticalOptions="Center"
+                                       WidthRequest="60"
+                                       HeightRequest="60">
+                                    <Label Text="🔄"
+                                           FontSize="35"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"/>
+                                </Frame>
+                            </Grid>
 
-            </Grid>
+                            <!-- Título y Contenido -->
+                            <StackLayout Grid.Row="1" Padding="15" Spacing="10">
+                                <Label Text="Transferencia"
+                                       FontSize="14"
+                                       FontAttributes="Bold"
+                                       HorizontalTextAlignment="Center"
+                                       TextColor="#0a3d62"/>
+
+                                <!-- Formulario colapsable -->
+                                <StackLayout x:Name="FormTransferencia"
+                                            IsVisible="False"
+                                            Spacing="10">
+                                    <Label Text="Cuenta origen"
+                                           FontSize="12"
+                                           FontAttributes="Bold"
+                                           TextColor="#0a3d62"/>
+                                    <Entry x:Name="CuentaOrigen"
+                                           Placeholder="Ingrese cuenta"
+                                           PlaceholderColor="#CCCCCC"
+                                           TextColor="#000000"
+                                           BackgroundColor="#F5F5F5"/>
+                                    <Label Text="Cuenta destino"
+                                           FontSize="12"
+                                           FontAttributes="Bold"
+                                           TextColor="#0a3d62"
+                                           Margin="0,5,0,0"/>
+                                    <Entry x:Name="CuentaDestino"
+                                           Placeholder="Ingrese cuenta"
+                                           PlaceholderColor="#CCCCCC"
+                                           TextColor="#000000"
+                                           BackgroundColor="#F5F5F5"/>
+                                    <Label Text="Importe (USD)"
+                                           FontSize="12"
+                                           FontAttributes="Bold"
+                                           TextColor="#0a3d62"
+                                           Margin="0,5,0,0"/>
+                                    <Entry x:Name="ImporteTransferencia"
+                                           Placeholder="0.00"
+                                           PlaceholderColor="#CCCCCC"
+                                           TextColor="#000000"
+                                           BackgroundColor="#F5F5F5"
+                                           Keyboard="Numeric"/>
+                                    <Button Text="Transferir"
+                                            BackgroundColor="#e67e22"
+                                            TextColor="White"
+                                            FontAttributes="Bold"
+                                            CornerRadius="20"
+                                            Margin="0,5,0,0"
+                                            Clicked="OnTransferenciaSubmit"/>
+                                </StackLayout>
+                            </StackLayout>
+                        </Grid>
+                    </Frame>
+
+                </StackLayout>
+            </ScrollView>
+
+        </Grid>
+
+        <!-- Footer -->
+        <Grid Grid.Row="2" BackgroundColor="#B0000000" Padding="15">
+            <Label Text="Desarrollado por Ariel R. y Anthony V. | EurekaBank © 2025"
+                   TextColor="White"
+                   FontSize="11"
+                   HorizontalTextAlignment="Center"/>
         </Grid>
 
     </Grid>

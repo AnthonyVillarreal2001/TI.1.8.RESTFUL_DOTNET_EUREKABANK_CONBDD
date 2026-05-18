@@ -186,6 +186,7 @@ namespace ec.edu.monster.views
                 Background = new SolidColorBrush(Color.FromRgb(230, 126, 34)),
                 Foreground = Brushes.White,
                 FontWeight = FontWeights.Bold,
+                FontSize = 14,
                 Cursor = Cursors.Hand,
                 BorderThickness = new Thickness(0)
             };
@@ -194,11 +195,6 @@ namespace ec.edu.monster.views
                 var values = new Dictionary<string, string>();
                 foreach (var kv in _textBoxes) values[kv.Key] = kv.Value.Text.Trim();
                 ButtonClick?.Invoke(values);
-            };
-            // Redondear botón
-            btn.Template = new ControlTemplate(typeof(Button))
-            {
-                VisualTree = new FrameworkElementFactory(typeof(Border))
             };
             var btnBorder = new Border { CornerRadius = new CornerRadius(20), Background = btn.Background, Child = btn };
             _formPanel.Children.Add(btnBorder);

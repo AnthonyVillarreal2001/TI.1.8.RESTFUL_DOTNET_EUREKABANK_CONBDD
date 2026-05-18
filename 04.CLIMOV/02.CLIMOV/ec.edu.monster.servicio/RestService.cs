@@ -25,7 +25,7 @@ namespace _02.CLIMOV.Servicio
             // - HTTP:  puerto 5043
             
             // 📱 Para DISPOSITIVO FÍSICO usa HTTPS con la IP de tu PC:
-            _baseUrl = "https://10.40.19.95:7043/api/CoreBancario";
+            _baseUrl = "https://172.21.124.128:7043/api/CoreBancario";
             
             // 📱 Para EMULADOR ANDROID usa 10.0.2.2:
             // _baseUrl = "https://10.0.2.2:7043/api/CoreBancario";

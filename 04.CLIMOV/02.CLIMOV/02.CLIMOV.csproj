@@ -21,7 +21,7 @@
 		<Nullable>enable</Nullable>
 
 		<!-- Display name -->
-		<ApplicationTitle>02.CLIMOV</ApplicationTitle>
+		<ApplicationTitle>EUREKABANK REST GR08</ApplicationTitle>
 
 		<!-- App Identifier -->
 		<ApplicationId>com.companyname.02.climov</ApplicationId>
