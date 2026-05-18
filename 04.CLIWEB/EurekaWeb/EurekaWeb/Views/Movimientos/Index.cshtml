@@ -1,0 +1,74 @@
+﻿@model EurekaWeb.Models.MovimientosVm
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <title>Movimientos - EurekaBank</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <div class="header">
+        <div class="header-left">
+            <img src="~/img/logo-ldu.png" class="logo-img" alt="Logo" />
+            <h1>EurekaBank</h1>
+        </div>
+        <a asp-controller="Home" asp-action="Menu" class="btn-logout" style="background: linear-gradient(135deg, #0a3d62, #0c2d48);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" fill="white" />
+            </svg>
+            Volver al Menú
+        </a>
+    </div>
+
+    <div class="movimientos-container">
+        <div class="movimientos-header">
+            <h2 style="color: var(--primary);">Movimientos de Cuenta</h2>
+            <div class="account-badge">Cuenta: @Model.Cuenta</div>
+        </div>
+
+        @if (Model.Movs == null || !Model.Movs.Any())
+        {
+            <div style="text-align:center; padding: 40px;">
+                <p>No hay movimientos registrados para esta cuenta.</p>
+            </div>
+        }
+        else
+        {
+            <div class="table-wrapper">
+                <table class="movimientos-table">
+                    <thead>
+                        <tr>
+                            <th>Nro</th>
+                            <th>Fecha</th>
+                            <th>Tipo</th>
+                            <th>Acción</th>
+                            <th>Importe</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var m in Model.Movs)
+                        {
+                            <tr class="@m.RowClass">
+                                <td><strong>@m.Numero</strong></td>
+                                <td>@m.Fecha</td>
+                                <td><span class="badge @m.BadgeClass">@m.Tipo</span></td>
+                                <td>@m.Accion</td>
+                                <td class="@m.ImporteClass"><strong>@m.Importe</strong></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+
+    <div class="footer">
+        Desarrollado por Ariel R. y Anthony V. | EurekaBank © 2025
+    </div>
+</body>
+</html>

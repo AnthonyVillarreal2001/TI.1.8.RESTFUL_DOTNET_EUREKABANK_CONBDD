@@ -1,0 +1,63 @@
+﻿<Window x:Class="ec.edu.monster.views.MovimientosDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Movimientos de Cuenta" Width="900" Height="550"
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+    <Window.Background>
+        <ImageBrush ImageSource="/ec.edu.monster.assets/img/sullivan.jpg" Stretch="UniformToFill"/>
+    </Window.Background>
+    <Grid>
+        <Rectangle Fill="#CC000000"/>
+        <Border Background="White" CornerRadius="20" Margin="20" Padding="20">
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,15">
+                    <Border CornerRadius="10">
+                        <Image Source="/ec.edu.monster.assets;component/img/logo-ldu.png" Height="35"/>
+                    </Border>
+                    <TextBlock Text="Movimientos de Cuenta" FontSize="22" FontWeight="Bold" Foreground="#0a3d62" Margin="15,0,0,0"/>
+                    <Border Background="#0a3d62" CornerRadius="20" Padding="12,6" Margin="20,0,0,0">
+                        <TextBlock x:Name="CuentaText" Foreground="White" FontWeight="SemiBold"/>
+                    </Border>
+                </StackPanel>
+                <DataGrid x:Name="MovimientosGrid" AutoGenerateColumns="False" CanUserAddRows="False"
+                          HeadersVisibility="Column" RowHeight="40" IsReadOnly="True"
+                          GridLinesVisibility="None" FontFamily="Inter, Segoe UI">
+                    <DataGrid.Resources>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="#0a3d62"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="Height" Value="45"/>
+                        </Style>
+                        <Style TargetType="DataGridRow">
+                            <Setter Property="Background" Value="White"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Accion}" Value="INGRESO">
+                                    <Setter Property="Background" Value="#D02ecc71"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Accion}" Value="SALIDA">
+                                    <Setter Property="Background" Value="#20e74c3c"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.Resources>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="NRO" Binding="{Binding NroMov}" Width="60"/>
+                        <DataGridTextColumn Header="FECHA" Binding="{Binding Fecha, StringFormat=yyyy-MM-dd HH:mm}" Width="160"/>
+                        <DataGridTemplateColumn Header="TIPO" Width="160">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Border CornerRadius="15" Background="{Binding TipoColor}" Padding="8,4">
+                                        <TextBlock Text="{Binding Tipo}" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                                    </Border>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="ACCIÓN" Binding="{Binding Accion}" Width="100"/>
+                        <DataGridTextColumn Header="IMPORTE" Binding="{Binding Importe, StringFormat=C2}" Width="120"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+        </Border>
+    </Grid>
+</Window>

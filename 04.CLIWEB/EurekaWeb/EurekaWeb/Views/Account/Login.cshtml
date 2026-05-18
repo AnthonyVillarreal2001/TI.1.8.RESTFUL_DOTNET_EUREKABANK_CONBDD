@@ -1,0 +1,37 @@
+﻿@{
+    Layout = null;
+    var error = ViewBag.Error as string;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <title>EurekaBank - Acceso</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-modal">
+            <div class="login-icon">
+                <img src="~/img/logo-ldu.png" alt="Logo" />
+            </div>
+            <h2>Bienvenido</h2>
+            <form asp-action="Login" asp-controller="Account" method="post">
+                <div class="input-group">
+                    <input type="text" name="usuario" placeholder="Usuario" required autofocus />
+                </div>
+                <div class="input-group">
+                    <input type="password" name="password" placeholder="Contraseña" required />
+                </div>
+                <button type="submit" class="btn-login">Ingresar</button>
+            </form>
+            @if (!string.IsNullOrEmpty(error))
+            {
+                <div class="error-message">@error</div>
+            }
+        </div>
+    </div>
+</body>
+</html>

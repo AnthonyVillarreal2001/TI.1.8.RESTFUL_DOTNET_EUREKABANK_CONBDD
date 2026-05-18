@@ -1,0 +1,13 @@
+SELECT TOP 100 * FROM [dbo].[TipoMovimiento];
+SELECT TOP 100 * FROM [dbo].[Sucursal];
+SELECT TOP 100 * FROM [dbo].[Empleado];
+SELECT TOP 100 * FROM [dbo].[Asignado];
+SELECT TOP 100 * FROM [dbo].[Cliente];
+SELECT TOP 100 * FROM [dbo].[Moneda];
+SELECT TOP 100 * FROM [dbo].[Cuenta];
+SELECT TOP 100 * FROM [dbo].[Movimiento];
+SELECT TOP 100 * FROM [dbo].[Parametro];
+SELECT TOP 100 * FROM [dbo].[InteresMensual];
+SELECT TOP 100 * FROM [dbo].[CostoMovimiento];
+SELECT TOP 100 * FROM [dbo].[CargoMantenimiento];
+SELECT TOP 100 * FROM [dbo].[Contador];

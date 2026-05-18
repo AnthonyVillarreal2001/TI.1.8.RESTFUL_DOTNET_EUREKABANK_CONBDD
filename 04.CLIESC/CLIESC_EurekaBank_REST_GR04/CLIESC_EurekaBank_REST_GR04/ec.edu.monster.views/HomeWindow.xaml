@@ -1,0 +1,56 @@
+<Window x:Class="ec.edu.monster.views.HomeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="EurekaBank" Width="1300" Height="750"
+        WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="CanResize">
+    <Window.Background>
+        <ImageBrush ImageSource="/ec.edu.monster.assets/img/sullivan.jpg" Stretch="UniformToFill"/>
+    </Window.Background>
+    <Grid>
+        <!-- Overlay oscuro -->
+        <Rectangle Fill="#99000000" />
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Header -->
+            <Border Grid.Row="0" Background="#D90a3d62" Height="80">
+                <DockPanel LastChildFill="False" Margin="20,0">
+                    <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" VerticalAlignment="Center">
+                        <!-- Logo envuelto en Border para esquinas redondeadas -->
+                        <Border CornerRadius="10" Margin="0,0,15,0">
+                            <Image Source="/ec.edu.monster.assets;component/img/logo-ldu.png" Height="45"/>
+                        </Border>
+                        <TextBlock Text="EurekaBank" FontSize="28" FontWeight="Bold" Foreground="White"/>
+                    </StackPanel>
+                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center">
+                        <Border Background="#0c2d48" CornerRadius="25" Padding="12,6" Margin="0,0,15,0">
+                            <StackPanel Orientation="Horizontal">
+                                <Border CornerRadius="16" Width="32" Height="32" ClipToBounds="True">
+                                    <Image Source="/ec.edu.monster.assets;component/img/monster.jpg" Stretch="UniformToFill"/>
+                                </Border>
+                                <TextBlock x:Name="UserBadge" Text="USUARIO" Foreground="White" FontWeight="SemiBold" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                        <Button x:Name="BtnLogout" Style="{StaticResource LogoutButton}" Content="Cerrar Sesión"/>
+                    </StackPanel>
+                </DockPanel>
+            </Border>
+
+            <!-- Contenido: Cards en fila horizontal -->
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <WrapPanel x:Name="CardsPanel" Margin="20" HorizontalAlignment="Center" Orientation="Horizontal" />
+            </ScrollViewer>
+
+            <!-- Footer -->
+            <Border Grid.Row="2" Background="#B0000000" BorderBrush="Coral" BorderThickness="0,1,0,0" Padding="15">
+                <TextBlock Text="Desarrollado por Ariel R. y Anthony V. | EurekaBank © 2025" 
+                           Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

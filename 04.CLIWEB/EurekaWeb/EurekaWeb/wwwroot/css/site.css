@@ -1,0 +1,553 @@
+/* ===== PALETA DE COLORES ===== */
+:root {
+    --primary: #0a3d62;
+    --primary-dark: #0c2d48;
+    --secondary: #e67e22;
+    --secondary-light: #f39c12;
+    --accent: #00a8ff;
+    --success: #2ecc71;
+    --error: #e74c3c;
+    --glass-bg: rgba(255,255,255,0.95);
+    --shadow: 0 12px 30px rgba(0,0,0,0.12);
+    --text-dark: #2c3e50;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Hacer que body ocupe toda la altura y sea flex */
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: url('/img/sullivan.JPG') no-repeat center center fixed;
+    background-size: cover;
+    position: relative;
+}
+
+    /* Overlay oscuro semitransparente SOLO para el fondo, no para el contenido */
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.55);
+        backdrop-filter: blur(1px);
+        z-index: 0;
+    }
+
+/* Todo el contenido visible por encima del overlay */
+.header, .main, .footer, .login-container, .modal-overlay, .movimientos-container {
+    position: relative;
+    z-index: 1;
+}
+
+/* ===== HEADER (sin cambios) ===== */
+.header {
+    background: rgba(10,61,66,0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    box-shadow: var(--shadow);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-img {
+    height: 50px;
+    border-radius: 12px;
+}
+
+.header h1 {
+    font-size: 1.8rem;
+    color: white;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.user-info {
+    background: var(--primary-dark);
+    padding: 8px 20px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: white;
+    font-weight: 600;
+}
+
+.user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .user-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+.btn-logout {
+    background: linear-gradient(135deg, var(--secondary), var(--secondary-light));
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+    .btn-logout:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    }
+
+/* ===== CARDS (layout horizontal) ===== */
+.main {
+    max-width: 1400px;
+    margin: 40px auto;
+    padding: 0 20px;
+    flex: 1; /* para que empuje el footer hacia abajo */
+}
+
+.grid-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+}
+
+.operation-card {
+    flex: 1 1 280px;
+    background: var(--glass-bg);
+    border-radius: 25px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+/* resto igual... (mantén lo que ya tenías para cards, formularios, etc.) */
+.card-icon {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    padding: 35px;
+    text-align: center;
+    transition: 0.3s;
+}
+
+    .card-icon img {
+        width: 70px;
+        height: 70px;
+        filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
+    }
+
+.card-title {
+    text-align: center;
+    padding: 20px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.card-form {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, padding 0.3s ease;
+    background: white;
+    padding: 0 20px;
+}
+
+.operation-card.active .card-form {
+    max-height: 350px;
+    padding: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+    .form-group label {
+        display: block;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--primary);
+        margin-bottom: 6px;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 12px 16px;
+        border-radius: 50px;
+        border: 1px solid #ddd;
+        font-size: 0.9rem;
+        transition: all 0.2s;
+        background: #fefefe;
+    }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(230,126,34,0.2);
+        }
+
+.btn-submit {
+    background: linear-gradient(135deg, var(--secondary), var(--secondary-light));
+    color: white;
+    border: none;
+    width: 100%;
+    padding: 12px;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: 0.2s;
+    margin-top: 8px;
+}
+
+    .btn-submit:hover {
+        transform: scale(1.02);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    }
+
+/* ===== FOOTER pegajoso abajo ===== */
+.footer {
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(5px);
+    border-top: 1px solid rgba(255,255,255,0.2);
+    text-align: center;
+    padding: 20px;
+    color: rgba(255,255,255,0.9);
+    font-size: 0.8rem;
+    margin-top: auto; /* Esto empuja el footer hacia abajo */
+    width: 100%;
+}
+
+/* ===== LOGIN (modal centrado) ===== */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    padding: 20px;
+}
+
+.login-modal {
+    background: var(--glass-bg);
+    border-radius: 30px;
+    padding: 40px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    backdrop-filter: blur(5px);
+}
+
+.login-icon {
+    width: 80px;
+    margin: 0 auto 20px;
+}
+
+    .login-icon img {
+        width: 100%;
+    }
+
+.login-modal h2 {
+    color: var(--primary);
+    margin-bottom: 25px;
+    font-size: 1.8rem;
+}
+
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+    .input-group input {
+        width: 100%;
+        padding: 14px 20px;
+        border-radius: 50px;
+        border: 1px solid #ccc;
+        font-size: 0.9rem;
+    }
+
+        .input-group input:focus {
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(230,126,34,0.2);
+            outline: none;
+        }
+
+.btn-login {
+    background: linear-gradient(135deg, var(--secondary), var(--secondary-light));
+    width: 100%;
+    padding: 14px;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 1rem;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.error-message {
+    color: var(--error);
+    margin-top: 15px;
+    font-size: 0.9rem;
+}
+
+/* ===== MODAL DE RESULTADO (sin cambios) ===== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+    background: var(--glass-bg);
+    border-radius: 30px;
+    padding: 40px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.result-icon {
+    width: 100px;
+    margin: 0 auto 20px;
+}
+
+    .result-icon svg {
+        width: 100%;
+        height: auto;
+    }
+
+.modal-content h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}
+
+.modal-message {
+    background: rgba(0,0,0,0.05);
+    border-radius: 20px;
+    padding: 20px;
+    margin: 20px 0;
+    font-size: 1rem;
+}
+
+.saldo-info {
+    background: linear-gradient(135deg, rgba(46,204,113,0.1), rgba(46,204,113,0.05));
+    border-left: 4px solid var(--success);
+    padding: 15px;
+    border-radius: 16px;
+    margin-top: 15px;
+    font-weight: 500;
+}
+
+.btn-back-menu {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    padding: 12px 25px;
+    border-radius: 50px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+/* ===== TABLA DE MOVIMIENTOS ===== */
+.movimientos-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    background: rgba(255, 255, 255, 0.96); /* Fondo casi blanco, no transparente */
+    border-radius: 30px;
+    padding: 30px;
+    box-shadow: var(--shadow);
+    flex: 1; /* también para que el footer no quede arriba */
+}
+
+.movimientos-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.account-badge {
+    background: var(--primary);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-weight: bold;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    border-radius: 20px;
+}
+
+.movimientos-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    background: white; /* fondo blanco sólido para la tabla */
+}
+
+    .movimientos-table th {
+        background: var(--primary);
+        color: white;
+        padding: 15px;
+        text-align: center;
+    }
+
+    .movimientos-table td {
+        padding: 12px;
+        text-align: center;
+        border-bottom: 1px solid #e0e0e0;
+        background: white;
+    }
+
+/* Filas alternas con colores muy suaves pero legibles */
+.tr-ingreso {
+    background-color: rgba(46, 204, 113, 0.15);
+}
+
+.tr-salida {
+    background-color: rgba(231, 76, 60, 0.1);
+}
+
+.badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.75rem;
+}
+
+.badge-deposito {
+    background: var(--success);
+    color: white;
+}
+
+.badge-retiro {
+    background: var(--error);
+    color: white;
+}
+
+.badge-transferencia {
+    background: var(--accent);
+    color: white;
+}
+
+.importe-ingreso {
+    color: var(--success);
+    font-weight: bold;
+}
+
+.importe-salida {
+    color: var(--error);
+    font-weight: bold;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        text-align: center;
+        padding: 15px 20px;
+    }
+
+    .grid-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .operation-card {
+        width: 100%;
+        max-width: 350px;
+    }
+
+    .movimientos-container {
+        padding: 20px;
+        margin: 20px;
+    }
+
+    .movimientos-table th, .movimientos-table td {
+        padding: 8px;
+        font-size: 0.8rem;
+    }
+}
